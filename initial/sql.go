@@ -19,5 +19,5 @@ func InitSql() {
 	}
 	orm.Debug = true
 	orm.RegisterDriver("mysql", orm.DRMySQL)
-	orm.RegisterDataBase("default", "mysql", fmt.Sprintf("%s:$s@tcp(%s:%d)/$s?charset=utf8", user, passwd, host, port, dbname))
+	orm.RegisterDataBase("default", "mysql", fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8", user, passwd, host, port, dbname))
 }
