@@ -29,6 +29,7 @@ type UserProfile struct {
 	Birth		string
 	Intro		string
 	User		*User `orm:"reverse(one)"`
+	Pet			*Pet `orm:"rel(fk)"`
 }
 
 
@@ -68,6 +69,22 @@ func Register(Account string, Password string) error {
 	return nil
 }
 
+func UpdatePro(id int, updPro UserProfile) error {
+	o := orm.NewOrm()
+	pro := UserProfile{Id: id}
+	
+	pro.Address = updPro.Address
+	pro.Realname = updPro.Realname
+	pro.Birth = updPro.Birth
+	pro.Hobby = updPro.Hobby
+	pro.Sex = updPro.Sex
+	pro.Intro = updPro.Intro
+	pro.Email = updPro.Email
+	pro.Phone = updPro.Phone
+
+	_, err := o.Update(&pro)
+	return err
+}
 
 func CheckLog(Account string, Password string) error {
 	o := orm.NewOrm()
