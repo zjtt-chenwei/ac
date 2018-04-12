@@ -1,7 +1,11 @@
 package models
 
-import (
+
+import(
+	"time"
+	
 	"github.com/astaxie/beego/orm"
+
 )
 
 type Pet struct {
@@ -10,8 +14,9 @@ type Pet struct {
 	Type		string
 	Sex			int
 	Age			int
-	Intro		string
-	UserProfile *UserProfile `orm:"reverse(many)"` 
+	Intro		string 
+	Created		time.Time
+	Changed		time.Time
 }
 
 func init() {
@@ -19,7 +24,6 @@ func init() {
 }
 
 func (p *Pet) TableName() string {
-    return "pet"
+	return "pet"
 }
 
-func 

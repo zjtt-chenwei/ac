@@ -9,7 +9,7 @@ import (
 )
 
 type User struct {
-	Id    		int
+	Id    		int `orm:"auto"`
 	Account		string
 	Password 	string
 	UserProfile *UserProfile  `orm:"null;rel(one);on_delete(set_null)"`
@@ -29,7 +29,7 @@ type UserProfile struct {
 	Birth		string
 	Intro		string
 	User		*User `orm:"reverse(one)"`
-	Pet			*Pet `orm:"rel(fk)"`
+	// Pet			*Pet `orm:"rel(fk)"`
 }
 
 
@@ -81,7 +81,7 @@ func UpdatePro(id int, updPro UserProfile) error {
 	pro.Intro = updPro.Intro
 	pro.Email = updPro.Email
 	pro.Phone = updPro.Phone
-
+	pro.User.Changed = time.Now()
 	_, err := o.Update(&pro)
 	return err
 }

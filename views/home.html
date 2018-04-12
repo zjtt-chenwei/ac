@@ -1,0 +1,74 @@
+{{template "head"}}
+
+    <title>宠物社区首页</title>
+</head>
+
+
+<body class="home">
+    <div class="body">
+        <header class="topbar">
+            <!-- 顶部 -->
+            <li class="button4">
+                <a href="/login" target="headFrame">登录</a>
+            </li>
+            <li class="button5">
+                <a href="/register" target="headFrame">注册</a>
+            </li>
+        </header>
+        <!-- 导航栏 -->
+        <header class="site-header-wrapper">
+            <div class="site-header">
+                <div class="container">
+
+                    <ul class="dd-menu sf-menu">
+                        <li class="active">
+                            <a href="/" title="Home">
+                                <span>首页</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/petmatch" title="Match">
+                                <span>宠物婚介</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="baike.html" title="Baike">
+                                <span>宠物百科</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="shop.html" title="Shop">
+                                <span>宠物用品</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/guanyuwomen" title="About">
+                                <span>关于我们</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/gerenzhongxin" title="Personal">
+                                <span>个人中心</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </header>
+    </div>
+</body>
+
+
+<body>
+    <!--主体-->
+    <div>
+        <img src="/static/images/index.png" style="margin-left:550px;">
+        <img src="/static/images/timg.jpg" style="margin-left:100px;">
+        <a href="/pet" class="wang1" style="text-decoration:none;font-size:30px;color:#E0D440;margin-top:20px;display:inline-block;">宠物婚介</a>
+        {{template "bottom"}}
+
+    </div>
+</body>
+
+</html>

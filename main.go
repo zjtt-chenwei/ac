@@ -1,7 +1,8 @@
 package main
 
 import (
-	_ "ac/routers"
+	_ "actest/routers"
+	_ "actest/initial"
 	"github.com/astaxie/beego"
 )
 
