@@ -2,12 +2,12 @@ package controllers
 
 import (
 	"actest/models"
-	"github.com/astaxie/beego"
+
 	"github.com/astaxie/beego/context"
 )
 
 type LoginController struct {
-	beego.Controller
+	BaseController
 }
 
 func (l *LoginController) Get() {
@@ -29,14 +29,14 @@ func (l *LoginController) Post() {
 	if err == nil {
 		maxAge := 0
 		if autoLogin {
-			maxAge = 1<<31 -1
+			maxAge = 1<<31 - 1
 		}
 		l.Ctx.SetCookie("uname", uname, maxAge, "/")
 		l.Ctx.SetCookie("pwd", pwd, maxAge, "/")
-	} 
+	}
 	l.Redirect("/", 302)
 	return
-	
+
 }
 
 func checkAccount(ctx *context.Context) bool {
@@ -44,7 +44,7 @@ func checkAccount(ctx *context.Context) bool {
 	if err != nil {
 		return false
 	}
-	
+
 	uname := ck.Value
 
 	ck, err = ctx.Request.Cookie("pwd")

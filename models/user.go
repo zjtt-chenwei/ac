@@ -28,7 +28,8 @@ type UserProfile struct {
 	Hobby		string
 	Birth		string
 	Intro		string
-	User		*User `orm:"reverse(one)"`
+	Pet			[]*Pet `orm:"reverse(many)"`
+	User		*User  `orm:"reverse(one)"`
 	// Pet			*Pet `orm:"rel(fk)"`
 }
 

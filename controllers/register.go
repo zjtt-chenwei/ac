@@ -2,12 +2,12 @@ package controllers
 
 import (
 	"actest/models"
+
 	"github.com/astaxie/beego"
 )
 
-
 type RegisterController struct {
-	beego.Controller
+	BaseController
 }
 
 func (r *RegisterController) Get() {
@@ -18,7 +18,7 @@ func (r *RegisterController) Post() {
 	uname := r.Input().Get("uname")
 	pwd := r.Input().Get("pwd")
 
-	err := models.Register (uname,pwd)
+	err := models.Register(uname, pwd)
 
 	if err != nil {
 		beego.Error(err)
