@@ -9,37 +9,39 @@ import (
 )
 
 type User struct {
-	Id    		int `orm:"auto"`
-	Account		string
-	Password 	string
-	UserProfile *UserProfile  `orm:"null;rel(one);on_delete(set_null)"`
-	Created  	time.Time `orm:"auto_now_add;type(datetime)"`
-	Changed  	time.Time `orm:"auto_now_add;type(datetime)"`
+	Id          int `orm:"auto"`
+	Account     string
+	Password    string
+	UserProfile *UserProfile `orm:"null;rel(one);on_delete(set_null)"`
+	Created     time.Time    `orm:"auto_now_add;type(datetime)"`
+	Changed     time.Time    `orm:"auto_now_add;type(datetime)"`
 }
 
 type UserProfile struct {
-	Id			int
-	Realname	string
-	Account	string
-	Sex			int
-	Phone		string
-	Email		string
-	Address		string
-	Hobby		string
-	Birth		string
-	Intro		string
-	Pet			[]*Pet `orm:"reverse(many)"`
-	User		*User  `orm:"reverse(one)"`
+	Id       int
+	Realname string
+	Account  string
+	Sex      int
+	Phone    string
+	Email    string
+	Address  string
+	Hobby    string
+	Birth    string
+	Intro    string
+	Province string
+	City     string
+	Uarea    string
+	Pet      []*Pet `orm:"reverse(many)"`
+	User     *User  `orm:"reverse(one)"`
 	// Pet			*Pet `orm:"rel(fk)"`
 }
-
 
 func init() {
 	orm.RegisterModel(new(User), new(UserProfile))
 }
 
 func (u *User) TableName() string {
-    return "user"
+	return "user"
 }
 
 func Register(Account string, Password string) error {
@@ -48,19 +50,19 @@ func Register(Account string, Password string) error {
 
 	pwdmd5 := com.Md5(Password)
 
-	user := &User{Account: Account, Password: pwdmd5}			
+	user := &User{Account: Account, Password: pwdmd5}
 
 	qs := o.QueryTable("user")
 	err := qs.Filter("Account", Account).One(user)
 	if err == nil {
 		return err
-	} 
+	}
 	user.Created = time.Now()
 	user.Changed = time.Now()
 	user.UserProfile.Id = user.Id
 	if v := vaild.Email(Account, "Email"); !v.Ok {
 		user.UserProfile.Phone = Account
-	}else{
+	} else {
 		user.UserProfile.Email = Account
 	}
 	_, err = o.Insert(user)
@@ -73,7 +75,7 @@ func Register(Account string, Password string) error {
 func UpdatePro(id int, updPro UserProfile) error {
 	o := orm.NewOrm()
 	pro := UserProfile{Id: id}
-	
+
 	pro.Address = updPro.Address
 	pro.Realname = updPro.Realname
 	pro.Birth = updPro.Birth
@@ -91,16 +93,16 @@ func CheckLog(Account string, Password string) error {
 	o := orm.NewOrm()
 	pwdmd5 := com.Md5(Password)
 
-	user := &User{Account: Account,Password: pwdmd5}
+	user := &User{Account: Account, Password: pwdmd5}
 
 	qs := o.QueryTable(user)
 	err := qs.Filter("Account", Account).One(user)
-	
+
 	if err != nil {
 		return err
 	}
 
-	if(user.Password == pwdmd5){
+	if user.Password == pwdmd5 {
 		return nil
 	}
 

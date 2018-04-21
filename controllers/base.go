@@ -10,7 +10,7 @@ type BaseController struct {
 }
 
 func (b *BaseController) Prepare() {
-	userLogin := GetSession("userLogin")
+	userLogin := b.GetSession("userLogin")
 	if userLogin == nil {
 		b.isLogin = false
 	} else {
@@ -23,3 +23,4 @@ func (b *BaseController) Go404() {
 	b.TplName = "404.html"
 	return
 }
+
