@@ -18,6 +18,13 @@ type Pet struct {
 	Created time.Time `orm:"auto_now_add;type(datetime)"`
 	Changed time.Time `orm:"auto_now_add;type(datetime)"`
 	User    *User     `orm:"rel(fk)"`
+	PetImg  *PetImg   `orm:"null;rel(one);on_delete(set_null)"`
+}
+
+type PetImg struct {
+	Id     int
+	imgURL string
+	Pet    *Pet `orm:"reverse(one)"`
 }
 
 func init() {
