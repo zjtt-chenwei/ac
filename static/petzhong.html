@@ -14,48 +14,210 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/listitem.css">
+    <link rel="stylesheet" href="css/select.css">
     <link rel="stylesheet" href="css/owl.carousel.css">
     <link rel="stylesheet" href="css/responsive.css">
       <script type="text/javascript" src="bootstrap/js/jquery-1.11.3.min.js"></script>
       <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/head.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/css.css">
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/ZoomPic.js"></script>
+<script type="text/javascript" src="js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="js/scri/script.js"></script>
+
 <script type="text/javascript">
 $(function(){
-   //鼠标滑过banner，左右按钮进行显示和隐藏
-   $(".banner").hover(function(){
-     $(".lr").show();
-   },function(){
-     $(".lr").hide();
-   });
-   //点击下面的小按钮，图片进行左右切换效果
-   $(".anniu li").click(function(){
-     $(this).addClass("on").siblings().removeClass("on");
-     var num=$(this).index();
-     $(".pic").animate({marginLeft:-1000*num},"slow");
-   });
-   //图片自动轮播效果
-   var a=0;
-   var automatic=setInterval(function(){
-     a++;
-     a=a%5;
-     $(".pic").animate({marginLeft:-1000*a},"slow");
-     $(".anniu li").eq(a).addClass("on").siblings().removeClass("on");
-   },6000);
-   //点击左右按钮，图片进行切换效果
-   $(".pre").click(function(){
-     a--;
-     a=(a+5)%5;
-     $(".pic").animate({marginLeft:-1000*a},"slow");
-     $(".anniu li").eq(a).addClass("on").siblings().removeClass("on");
-   });
-   $(".next").click(function(){
-     a++;
-     a=a%5;
-     $(".pic").animate({marginLeft:-1000*a},"slow");
-     $(".anniu li").eq(a).addClass("on").siblings().removeClass("on");
-   });
-});
-	</script>
+    new ZoomPic("jswbox");  
+})
+
+var kkpager = { 
+//divID 
+pagerid : 'div_pager', 
+//当前页码 
+pno : 1, 
+//总页码 
+total : 1, 
+//总数据条数 
+totalRecords : 0, 
+//是否显示总页数 
+isShowTotalPage : true, 
+//是否显示总记录数 
+isShowTotalRecords : true, 
+//是否显示页码跳转输入框 
+isGoPage : true, 
+//链接前部 
+hrefFormer : '', 
+//链接尾部 
+hrefLatter : '', 
+/****链接算法****/
+getLink : function(n){ 
+//这里的算法适用于比如： 
+//hrefFormer=http://www.xx.com/news/20131212 
+//hrefLatter=.html 
+//那么首页（第1页）就是http://www.xx.com/news/20131212.html 
+//第2页就是http://www.xx.com/news/20131212_2.html 
+//第n页就是http://www.xx.com/news/20131212_n.html 
+if(n == 1){ 
+return this.hrefFormer + this.hrefLatter; 
+}else{ 
+return this.hrefFormer + '_' + n + this.hrefLatter; 
+} 
+}, 
+//跳转框得到输入焦点时 
+focus_gopage : function (){ 
+var btnGo = $('#btn_go'); 
+$('#btn_go_input').attr('hideFocus',true); 
+btnGo.show(); 
+btnGo.css('left','0px'); 
+$('#go_page_wrap').css('border-color','#6694E3'); 
+btnGo.animate({left: '+=44'}, 50,function(){ 
+//$('#go_page_wrap').css('width','88px'); 
+}); 
+}, 
+//跳转框失去输入焦点时 
+blur_gopage : function(){ 
+setTimeout(function(){ 
+var btnGo = $('#btn_go'); 
+//$('#go_page_wrap').css('width','44px'); 
+btnGo.animate({ 
+left: '-=44'
+}, 100, function() { 
+$('#btn_go').css('left','0px'); 
+$('#btn_go').hide(); 
+$('#go_page_wrap').css('border-color','#DFDFDF'); 
+}); 
+},400); 
+}, 
+//跳转框页面跳转 
+gopage : function(){ 
+var str_page = $("#btn_go_input").val(); 
+if(isNaN(str_page)){ 
+$("#btn_go_input").val(this.next); 
+return; 
+} 
+var n = parseInt(str_page); 
+if(n < 1 || n >this.total){ 
+$("#btn_go_input").val(this.next); 
+return; 
+} 
+//这里可以按需改window.open 
+window.location = this.getLink(n); 
+}, 
+//分页按钮控件初始化 
+init : function(config){ 
+//赋值 
+this.pno = isNaN(config.pno) ? 1 : parseInt(config.pno); 
+this.total = isNaN(config.total) ? 1 : parseInt(config.total); 
+this.totalRecords = isNaN(config.totalRecords) ? 0 : parseInt(config.totalRecords); 
+if(config.pagerid){this.pagerid = config.pagerid;} 
+if(config.isShowTotalPage != undefined){this.isShowTotalPage=config.isShowTotalPage;} 
+if(config.isShowTotalRecords != undefined){this.isShowTotalRecords=config.isShowTotalRecords;} 
+if(config.isGoPage != undefined){this.isGoPage=config.isGoPage;} 
+this.hrefFormer = config.hrefFormer || ''; 
+this.hrefLatter = config.hrefLatter || ''; 
+if(config.getLink && typeof(config.getLink) == 'function'){this.getLink = config.getLink;} 
+//验证 
+if(this.pno < 1) this.pno = 1; 
+this.total = (this.total <= 1) ? 1: this.total; 
+if(this.pno > this.total) this.pno = this.total; 
+this.prv = (this.pno<=2) ? 1 : (this.pno-1); 
+this.next = (this.pno >= this.total-1) ? this.total : (this.pno + 1); 
+this.hasPrv = (this.pno > 1); 
+this.hasNext = (this.pno < this.total); 
+this.inited = true; 
+}, 
+//生成分页控件Html 
+generPageHtml : function(){ 
+if(!this.inited){ 
+return; 
+} 
+var str_prv='',str_next=''; 
+if(this.hasPrv){ 
+str_prv = '<a href="'+this.getLink(this.prv)+'" title="上一页">上一页</a>'; 
+}else{ 
+str_prv = '<span class="disabled">上一页</span>'; 
+} 
+if(this.hasNext){ 
+str_next = '<a href="'+this.getLink(this.next)+'" title="下一页">下一页</a>'; 
+}else{ 
+str_next = '<span class="disabled">下一页</span>'; 
+} 
+var str = ''; 
+var dot = '<span>...</span>'; 
+var total_info=''; 
+if(this.isShowTotalPage || this.isShowTotalRecords){ 
+total_info = '<span class="normalsize">共'; 
+if(this.isShowTotalPage){ 
+total_info += this.total+'页'; 
+if(this.isShowTotalRecords){ 
+total_info += ' / '; 
+} 
+} 
+if(this.isShowTotalRecords){ 
+total_info += this.totalRecords+'条数据'; 
+} 
+total_info += '</span>'; 
+} 
+var gopage_info = ''; 
+if(this.isGoPage){ 
+gopage_info = ' 转到<span id="go_page_wrap" style="display:inline-block;width:44px;height:18px;border:1px solid #DFDFDF;margin:0px 1px;padding:0px;position:relative;left:0px;top:5px;">'+ 
+'<input type="button" id="btn_go" onclick="kkpager.gopage();" style="width:44px;height:20px;line-height:20px;padding:0px;font-family:arial,宋体,sans-serif;text-align:center;border:0px;background-color:#0063DC;color:#FFF;position:absolute;left:0px;top:-1px;display:none;" value="确定" />'+ 
+'<input type="text" id="btn_go_input" onfocus="kkpager.focus_gopage()" onkeypress="if(event.keyCode<48 || event.keyCode>57)return false;" onblur="kkpager.blur_gopage()" style="width:42px;height:16px;text-align:center;border:0px;position:absolute;left:0px;top:0px;outline:none;" value="'+this.next+'" /></span>页'; 
+} 
+//分页处理 
+if(this.total <= 8){ 
+for(var i=1;i<=this.total;i++){ 
+if(this.pno == i){ 
+str += '<span class="curr">'+i+'</span>'; 
+}else{ 
+str += '<a href="'+this.getLink(i)+'" title="第'+i+'页">'+i+'</a>'; 
+} 
+} 
+}else{ 
+if(this.pno <= 5){ 
+for(var i=1;i<=7;i++){ 
+if(this.pno == i){ 
+str += '<span class="curr">'+i+'</span>'; 
+}else{ 
+str += '<a href="'+this.getLink(i)+'" title="第'+i+'页">'+i+'</a>'; 
+} 
+} 
+str += dot; 
+}else{ 
+str += '<a href="'+this.getLink(1)+'" title="第1页">1</a>'; 
+str += '<a href="'+this.getLink(2)+'" title="第2页">2</a>'; 
+str += dot; 
+var begin = this.pno - 2; 
+var end = this.pno + 2; 
+if(end > this.total){ 
+end = this.total; 
+begin = end - 4; 
+if(this.pno - begin < 2){ 
+begin = begin-1; 
+} 
+}else if(end + 1 == this.total){ 
+end = this.total; 
+} 
+for(var i=begin;i<=end;i++){ 
+if(this.pno == i){ 
+str += '<span class="curr">'+i+'</span>'; 
+}else{ 
+str += '<a href="'+this.getLink(i)+'" title="第'+i+'页">'+i+'</a>'; 
+} 
+} 
+if(end != this.total){ 
+str += dot; 
+} 
+} 
+} 
+str = " "+str_prv + str + str_next + total_info + gopage_info; 
+$("#"+this.pagerid).html(str); 
+} 
+};
+
+</script>
 	<style type="text/css">
         body{
             font-family:微软雅黑;
@@ -169,9 +331,74 @@ cursor:pointer;border-radius:100%}
     color:#000000;
 	background:#FF9933;
 }
+
+
+#div_pager{ 
+clear:both; 
+height:30px; 
+line-height:30px; 
+margin-top:20px; 
+color:#999999; 
+text-align:center;
+} 
+#div_pager a{ 
+padding:4px 8px; 
+margin:10px 3px; 
+font-size:12px; 
+border:1px solid #DFDFDF; 
+background-color:#FFF; 
+color:#9d9d9d; 
+text-decoration:none; 
+} 
+#div_pager span{ 
+padding:4px 8px; 
+margin:10px 3px; 
+font-size:14px; 
+} 
+#div_pager span.disabled{ 
+padding:4px 8px; 
+margin:10px 3px; 
+font-size:12px; 
+border:1px solid #DFDFDF; 
+background-color:#FFF; 
+color:#DFDFDF; 
+} 
+#div_pager span.curr{ 
+padding:4px 8px; 
+margin:10px 3px; 
+font-size:12px; 
+border:1px solid #FF6600; 
+background-color:#FF6600; 
+color:#FFF; 
+} 
+#div_pager a:hover{ 
+background-color:#FFEEE5; 
+border:1px solid #FF6600; 
+} 
+#div_pager span.normalsize{ 
+font-size:12px; 
+}  
 	</style>
 </head>
 <body>
+    <div id="jswbox">
+        <div class="spacer-50" style="margin-top: 30px">
+            <img src="images/zhua.png">
+            <h2 style="font-weight: 400;"><span>——</span>最热萌宠<span>——</span></h2>
+        </div> 
+    <pre class="prev">prev</pre>
+    <pre class="next">next</pre>
+    <ul style="margin-top: -90px">
+        <li><img src="images/g.jpg" alt="大东" /></li>
+        <li><img src="images/a.jpg" alt="MAGGIE" /></li>
+        <li><img src="images/b.jpg" alt="豆豆" /></li>
+        <li><img src="images/k.jpg" alt="小乐" /></li>
+        <li><img src="images/d.jpg" alt="桐桐" /></li>
+        <li><img src="images/cc.jpg" alt="jack" /></li>
+        <li><img src="images/u=824553432,3402182755&fm=200&gp=0.jpg" alt="五月" /></li>
+    </ul>
+</div>
+<!--
 <div class="rongqi1" style="width:1024px;position:relative;margin:0 auto;cursor:default;">
     <div class="banner">
 	
@@ -206,7 +433,7 @@ cursor:pointer;border-radius:100%}
    </div>   
 </div>
 <div class="rongqi2" style="border:0px solid black;width:1024px;top:0px;height:150px;position:relative;margin:0 auto;cursor:default;">
-    <div class="pet-screen">   <!--宠物筛选框-->
+    <div class="pet-screen">   <!--宠物筛选框--><!--
 	  <div class="hd">
         <h2 class="title">宠物筛选</h2>
       </div>
@@ -268,7 +495,76 @@ cursor:pointer;border-radius:100%}
 		
     </div>
 	</div>
-<div class="zhuti" style="position:relative;">
+-->
+<div class="hd" style="margin-top: 120px;padding-left: 140px">
+        <h2 class="title">宠物筛选</h2>
+      </div>
+<ul class="select" style="margin-top: 30px">
+        <li class="select-list">
+            <dl id="select1">
+                <dt>种类：</dt>
+                <dd class="select-all selected"><a href="#">全部</a></dd>
+                <dd><a href="#">猫</a></dd>
+                <dd><a href="#">狗</a></dd>
+                <dd><a href="#">兔子</a></dd>
+                <dd><a href="#">鸟类</a></dd>
+                <dd><a href="#">小宠类</a></dd>
+                <dd><a href="#">水族类</a></dd>
+                <dd><a href="#">爬虫类</a></dd>
+            </dl>
+        </li>
+        <li class="select-list">
+            <dl id="select2">
+                <dt>地区：</dt>
+                <dd class="select-all selected"><a href="#">全部</a></dd>
+                <dd><a href="#">杭州</a></dd>
+                <dd><a href="#">上海</a></dd>
+                <dd><a href="#">北京</a></dd>
+                <dd><a href="#">广州</a></dd>
+                <dd><a href="#">天津</a></dd>
+                <dd><a href="#">南京</a></dd>
+                <dd><a href="#">济南</a></dd>
+                <dd><a href="#">重庆</a></dd>
+                <dd><a href="#">厦门</a></dd>
+                <dd><a href="#">宁波</a></dd>
+                <dd><a href="#">青岛</a></dd>
+                <dd><a href="#">大连</a></dd>
+                <dd><a href="#">成都</a></dd>
+                <dd><a href="#">武汉</a></dd>
+                <dd><a href="#">哈尔滨</a></dd>
+                <dd><a href="#">西安</a></dd>
+                <dd><a href="#">沈阳</a></dd>
+                <dd><a href="#">长沙</a></dd>
+                <dd><a href="#">郑州</a></dd>
+                <dd><a href="#">福州</a></dd>
+                <dd><a href="#">苏州</a></dd>
+                <dd><a href="#">石家庄</a></dd>
+                <dd><a href="#">东莞</a></dd>
+                <dd><a href="#">佛山</a></dd>
+                <dd><a href="#">无锡</a></dd>
+                <dd><a href="#">烟台</a></dd>
+                <dd><a href="#">太原</a></dd>
+                <dd><a href="#">长沙</a></dd>
+                <dd><a href="#">长春</a></dd>
+            </dl>
+        </li>
+        <li class="select-list">
+            <dl id="select3">
+                <dt>性别：</dt>
+                <dd class="select-all selected"><a href="#">全部</a></dd>
+                <dd><a href="#">雄性</a></dd>
+                <dd><a href="#">雌性</a></dd>
+                <dd><a href="#">其他</a></dd>
+            </dl>
+        </li>
+        <li class="select-result">
+            <dl>
+                <dt>已选条件：</dt>
+                <dd class="select-no">暂时没有选择过滤条件</dd>
+            </dl>
+        </li>
+    </ul>
+<ul class="zhuti" style="position:relative;">
   <ul class="list-row" style="margin-top: 100px;float: left; font-family: "Microsoft YaHei";color:#333;font-size: 12px;">
     <div class="side" style="margin-left: 55px;">
         <li class="span6 list-item car-item" style="display: inline-block;">
@@ -444,7 +740,25 @@ cursor:pointer;border-radius:100%}
         </li>
     </div>   
   </ul> 
+</ul>
 
+<div id="div_pager"></div> 
+<script type="text/javascript"> 
+//生成分页控件 
+kkpager.init({ 
+pno : '${p.pageNo}', 
+//总页码 
+total : '${p.totalPage}', 
+//总数据条数 
+totalRecords : '${p.totalCount}', 
+//链接前部 
+hrefFormer : '${hrefFormer}', 
+//链接尾部 
+hrefLatter : '${hrefLatter}'
+}); 
+kkpager.generPageHtml(); 
+</script>
+</script>  
 <!--底部-->       
 
 <!--         
