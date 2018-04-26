@@ -11,10 +11,10 @@ type Pet struct {
 	Name    string
 	Speci   string
 	variety string
-	Sex     int
+	Sex     byte
 	Age     int
 	Intro   string
-	Partner int
+	Partner byte
 	Created time.Time `orm:"auto_now_add;type(datetime)"`
 	Changed time.Time `orm:"auto_now_add;type(datetime)"`
 	User    *User     `orm:"rel(fk)"`
@@ -23,6 +23,7 @@ type Pet struct {
 
 type PetImg struct {
 	Id     int
+	cover  byte
 	imgURL string
 	Pet    *Pet `orm:"reverse(one)"`
 }
