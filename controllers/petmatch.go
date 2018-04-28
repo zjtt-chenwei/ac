@@ -24,7 +24,7 @@ func (lp *ListPetController) Get() {
 
 	offset, err2 := beego.AppConfig.Int("pageoffset")
 	if err2 != nil {
-		offset = 9
+		offset = 40
 	}
 
 	condMap := make(map[string]string)
@@ -43,3 +43,4 @@ func (lp *ListPetController) Get() {
 
 	lp.TplName = "petmatch.html"
 }
+

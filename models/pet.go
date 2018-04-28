@@ -57,7 +57,7 @@ func ListPet(condMap map[string]string, page int, offset int) (num int64, err er
 		page = 1
 	}
 	if offset < 1 {
-		offset = 9
+		offset = 40
 	}
 
 	start := (page - 1) * offset

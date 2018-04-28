@@ -33,7 +33,7 @@ func (lin *LoginController) Post() {
 		lin.ServeJSON()
 	}
 
-	err := models.CheckLog(uname, pwd)
+	err, user := models.CheckLog(uname, pwd)
 
 	if err == nil {
 		lin.SetSession("userLogin", "1")

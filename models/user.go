@@ -89,22 +89,14 @@ func UpdatePro(id int, updPro UserProfile) error {
 	return err
 }
 
-func CheckLog(Account string, Password string) error {
+func CheckLog(Account string, Password string) (err error, user *User) {
 	o := orm.NewOrm()
 	pwdmd5 := com.Md5(Password)
 
-	user := &User{Account: Account, Password: pwdmd5}
+	user = &User{Account: Account, Password: pwdmd5}
 
 	qs := o.QueryTable(user)
-	err := qs.Filter("Account", Account).One(user)
+	err = qs.Filter("Account", Account).Filter("Password", pwdmd5).One(user)
 
-	if err != nil {
-		return err
-	}
-
-	if user.Password == pwdmd5 {
-		return nil
-	}
-
-	return nil
+	return err, user
 }
