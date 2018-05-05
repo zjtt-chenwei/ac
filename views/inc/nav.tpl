@@ -3,7 +3,7 @@
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
+        <span class="sr-only">其他</span>  <!-- 当屏幕小于一定尺寸的时候，导航条会自动隐藏，变成三个“横线”的按钮显示在导航条上，点击这个导航条上的这个按钮，就可以显示出导航的菜单来。-->
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
