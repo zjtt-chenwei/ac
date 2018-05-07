@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/orm"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 type Pet struct {
@@ -17,7 +18,7 @@ type Pet struct {
 	Partner byte
 	Created time.Time `orm:"auto_now_add;type(datetime)"`
 	Changed time.Time `orm:"auto_now_add;type(datetime)"`
-	User    *User     `orm:"rel(fk)"`
+	UserProfile    *UserProfile     `orm:"rel(fk)"`
 	PetImg  *PetImg   `orm:"null;rel(one);on_delete(set_null)"`
 }
 
@@ -29,7 +30,7 @@ type PetImg struct {
 }
 
 func init() {
-	orm.RegisterModel(new(Pet))
+	orm.RegisterModel(new(Pet),new(PetImg))
 }
 
 func (p *Pet) TableName() string {

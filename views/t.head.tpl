@@ -52,7 +52,7 @@
     <script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
     </script>
-    <style type="text/css">
+    <!-- <style type="text/css">
         body {
             font-family: 微软雅黑;
             margin: 0px;
@@ -109,6 +109,6 @@
         .button1 a {
             background: #FF9933;
         }
-    </style>
+    </style> -->
 
 {{end}}

@@ -22,7 +22,7 @@ func (lin *LoginController) Get() {
 func (lin *LoginController) Post() {
 	uname := lin.GetString("uname")
 	pwd := lin.GetString("pwd")
-	autoLogin := lin.GetString("autoLogin") == "on"
+	// autoLogin := lin.GetString("autoLogin") == "on"
 
 	if "" == uname {
 		lin.Data["json"] = map[string]interface{}{"code": 0, "message": "账号不能为空"}
