@@ -22,7 +22,7 @@ import (
 
 const (
 	//BASE64字符表,不要有重复
-	base64Table        = "<>:;',./?~!@#$CDVWX%^&*ABYZabcghijklmnopqrstuvwxyz01EFGHIJKLMNOPQRSTU2345678(def)_+|{}[]9/"
+	base64Table        = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_"
 	hashFunctionHeader = "a.c.community"
 	hashFunctionFooter = "09.O25.O20.78"
 )
@@ -74,7 +74,7 @@ func Base64Decode(s string) (string, error) {
 
 /* 字符截取 */
 
-func SubStrings(s string, pos, length int) string {
+func SubString(s string, pos, length int) string {
 	runes := []rune(s)					// 将string对象转为一个字符数组
 	l := pos + length
 	if l > len(runes) {

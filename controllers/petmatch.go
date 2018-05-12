@@ -43,4 +43,3 @@ func (lp *ListPetController) Get() {
 
 	lp.TplName = "petmatch.html"
 }
-

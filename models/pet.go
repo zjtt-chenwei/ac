@@ -8,18 +8,18 @@ import (
 )
 
 type Pet struct {
-	Id      int
-	Name    string
-	Speci   string
-	variety string
-	Sex     byte
-	Age     int
-	Intro   string
-	Partner byte
-	Created time.Time `orm:"auto_now_add;type(datetime)"`
-	Changed time.Time `orm:"auto_now_add;type(datetime)"`
-	UserProfile    *UserProfile     `orm:"rel(fk)"`
-	PetImg  *PetImg   `orm:"null;rel(one);on_delete(set_null)"`
+	Id          int
+	Name        string
+	Speci       string
+	variety     string
+	Sex         byte
+	Age         int
+	Intro       string
+	Partner     byte
+	Created     time.Time    `orm:"auto_now_add;type(datetime)"`
+	Changed     time.Time    `orm:"auto_now_add;type(datetime)"`
+	UserProfile *UserProfile `orm:"rel(fk)"`
+	PetImg      *PetImg      `orm:"null;rel(one);on_delete(set_null)"`
 }
 
 type PetImg struct {
@@ -30,7 +30,7 @@ type PetImg struct {
 }
 
 func init() {
-	orm.RegisterModel(new(Pet),new(PetImg))
+	orm.RegisterModel(new(Pet), new(PetImg))
 }
 
 func (p *Pet) TableName() string {
