@@ -47,13 +47,13 @@
                 </div>
             </div>
         </div>
-<script src="/static/js/jquery-2.2.3.min.js"></script> <!-- Jquery Library Call -->
-<script src="/static/vendor/magnific/jquery.magnific-popup.min.js"></script> <!-- Maginific Popup Plugin -->
-<script src="/static/js/ui-plugins.js"></script> <!-- UI Plugins -->
-<script src="/static/js/helper-plugins.js"></script> <!-- Helper Plugins -->
-<script src="/static/vendor/owl-carousel/js/owl.carousel.min.js"></script> <!-- Owl Carousel -->
-<script src="/static/js/bootstrap.js"></script> <!-- UI -->
-<script src="/static/js/init.js"></script> <!-- All Scripts -->
-<script src="/static/vendor/flexslider/js/jquery.flexslider.js"></script> <!-- FlexSlider -->
+<script src="../static/js/jquery-2.2.3.min.js"></script> <!-- Jquery Library Call -->
+<script src="../static/vendor/magnific/jquery.magnific-popup.min.js"></script> <!-- Maginific Popup Plugin -->
+<script src="../static/js/ui-plugins.js"></script> <!-- UI Plugins -->
+<script src="../static/js/helper-plugins.js"></script> <!-- Helper Plugins -->
+<script src="../static/vendor/owl-carousel/js/owl.carousel.min.js"></script> <!-- Owl Carousel -->
+<script src="../static/js/bootstrap.js"></script> <!-- UI -->
+<script src="../static/js/init.js"></script> <!-- All Scripts -->
+<script src="../static/vendor/flexslider/js/jquery.flexslider.js"></script> <!-- FlexSlider -->
 <!--<script src="js/jquery.mb.YTPlayer.js"></script>-->
 {{end}}

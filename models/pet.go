@@ -9,6 +9,7 @@ import (
 
 type Pet struct {
 	Id          int
+	Coverid		int
 	Name        string
 	Speci       string
 	variety     string

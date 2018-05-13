@@ -31,6 +31,7 @@ type UserProfile struct {
 	Province string
 	City     string
 	Uarea    string
+	CoverUrl string
 	Pet      []*Pet `orm:"reverse(many)"`
 	User     *User  `orm:"reverse(one)"`
 	// Pet			*Pet `orm:"rel(fk)"`
