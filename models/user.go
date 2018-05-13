@@ -77,6 +77,7 @@ func UpdatePro(id int, updPro UserProfile) error {
 	o := orm.NewOrm()
 	pro := UserProfile{Id: id}
 
+	pro.CoverUrl = updPro.CoverUrl
 	pro.Address = updPro.Address
 	pro.Realname = updPro.Realname
 	pro.Birth = updPro.Birth

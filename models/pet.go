@@ -9,7 +9,7 @@ import (
 
 type Pet struct {
 	Id          int
-	Coverid		int
+	Coverid     int
 	Name        string
 	Speci       string
 	variety     string
@@ -36,6 +36,26 @@ func init() {
 
 func (p *Pet) TableName() string {
 	return "pet"
+}
+
+// 更新宠物信息
+func UpdatePetInfo(id int, updPI Pet) error {
+	o := orm.NewOrm()
+	pet := Pet{Id: id}
+
+	pet.Age = updPI.Age
+	pet.Name = updPI.Name
+	pet.Sex = updPI.Sex
+	pet.Speci = updPI.Speci
+	pet.Partner = updPI.Partner
+	pet.Intro = updPI.Intro
+	pet.variety = updPI.variety
+	pet.Coverid = updPI.Coverid
+
+	pet.Changed = updPI.Changed
+
+	_, err := o.Update(&pet)
+	return err
 }
 
 // 函数作用:对页面的选择结果进行筛选
