@@ -12,22 +12,22 @@
       </button>
       <a class="navbar-brand" href="/"></a>
     </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
+   <!-- onmouseover="this.style.color='#f1ad48'" onmouseout="this.style.color='#000000'"  style="color:#000000;" -->
+    <!-- Collect the nav links, forms, and other content for toggling -->  
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/">首页 <span class="sr-only">(current)</span></a></li>
-        <li><a href="/petmatch">宠物婚介</a></li>
-        <li><a href="/baike">宠物百科</a></li>
-        <li><a href="/shop">宠物用品</a></li>
-        <li><a href="/about">关于我们</a></li>
+        <li class="active"><a href="/" >首页 <span class="sr-only">(current)</span></a></li>
+        <li><a href="../static/petmatch" >宠物婚介</a></li>
+        <li><a href="../static/baike" >宠物百科</a></li>
+        <li><a href="../static/shop" >宠物用品</a></li>
+        <li><a href="../static/about" >关于我们</a></li>
       </ul>
-      <form class="navbar-form navbar-left">
+      <!-- <form class="navbar-form navbar-left">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search">
         </div>
         <button type="submit" class="btn btn-default">提交</button>
-      </form>
+      </form> -->
       <ul class="nav navbar-nav navbar-right">
         {{if .isLogin}}
         <li class="dropdown">

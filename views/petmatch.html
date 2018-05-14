@@ -1,30 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
 
-{{range $k,$v := .pet}}  <--循环遍历，每一个v代表一个宠物-->
-<div class=>
-    点开后的地址 <a href="/petmatch/{{$v.Id}}"
-    该宠物图片的超链接 {{$v.Coverid}}
-</div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>宠物婚介</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="static/css/listitem.css">
+    <link rel="stylesheet" href="static/css/select.css">
+    <link rel="stylesheet" type="text/css" href="static/css/css.css">
+    <link rel="stylesheet" type="text/css" href="static/css/style3.css">
 
 
-分页部分：
-{{if .paginator.HasPages}}
-<ul class="pagination pagination">
-    {{if .paginator.HasPrev}}
-    <li><a href="{{.paginator.PageLinkFirst}}">首页</a></li>
-    <li><a href="{{.paginator.PageLinkPrev}}">&laquo;</a></li>
-    {{else}}
-    <li class="disabled"><a>首页</a></li>
-    <li class="disabled"><a>&laquo;</a></li>
-    {{end}}
-    {{range $index, $page := .paginator.Pages}} <li{{if $.paginator.IsActive .}} class="active"{{end}}> <a href="{{$.paginator.PageLink $page}}">{{$page}}</a>
-    </li>
-    {{end}}
-    {{if .paginator.HasNext}}
-    <li><a href="{{.paginator.PageLinkNext}}">&raquo;</a></li>
-    <li><a href="{{.paginator.PageLinkLast}}">尾页</a></li>
-    {{else}}
-    <li class="disabled"><a>&raquo;</a></li>
-    <li class="disabled"><a>尾页</a></li>
-    {{end}}
-</ul>
-{{end}}
+    <body>
+
+        <div id="jswbox">
+            <div class="spacer-50" style="margin-top: 30px">
+                <img src="static/images/zhua.png">
+                <h2 style="font-weight: 400;">
+                    <span>——</span>最热萌宠
+                    <span>——</span>
+                </h2>
+            </div>
+            <pre class="prev">prev</pre>
+            <pre class="next">next</pre>
+            <ul style="margin-top: -90px">
+                <!--这里先写静态的，因为没有热门宠物数据-->
+                <!--
+        <li><img src="{{$v.Coverid}}" /></li>
+        !-->
+                <li>
+                    <img src="static/images/g.jpg" alt="大东" />
+                </li>
+                <li>
+                    <img src="static/images/a.jpg" alt="MAGGIE" />
+                </li>
+                <li>
+                    <img src="static/images/b.jpg" alt="豆豆" />
+                </li>
+                <li>
+                    <img src="static/images/k.jpg" alt="小乐" />
+                </li>
+                <li>
+                    <img src="static/images/d.jpg" alt="桐桐" />
+                </li>
+                <li>
+                    <img src="static/images/cc.jpg" alt="jack" />
+                </li>
+                <li>
+                    <img src="static/images/u=824553432,3402182755&fm=200&gp=0.jpg" alt="五月" />
+                </li>
+            </ul>
+        </div>
+
+        <!--宠物筛选-->
+        <div class="hd" style="margin-top: 120px;padding-left: 140px">
+            <h2 class="title">宠物筛选</h2>
+        </div>
+        <ul class="select" style="margin-top: 30px">
+            {{range $v := .speci}}
+            <li class="select-list" name="variety">
+                <dl id="select1">
+                    <dt>种类：</dt>
+                    <dd class="select-all selected">
+                        <option value=""></option> 全部</dd>
+                    <dd>
+                        <option value="cat"></option>猫</dd>
+                    <dd>
+                        <option value="dog"></option>狗</dd>
+                    <dd>
+                        <option value="rabbit"></option>兔子</dd>
+                    <dd>
+                        <option value="bird"></option>鸟类</dd>
+                    <dd>
+                        <option value="small"></option>小宠类</dd>
+                    <dd>
+                        <option value="aquatic "></option>水族类</dd>
+                    <dd>
+                        <option value="reptilian"></option>爬虫类</dd>
+                </dl>
+            </li>
+            <!-- <li class="select-list" name="{{地区}}">
+                <dl id="select2">
+                    <dt>地区：</dt>
+                    <dd class="select-all selected">
+                        <option value="{{全部地区}}"></option> 全部</dd>
+                    <dd>
+                        <option value="{{筛选上城区}}"></option>上城区</dd>
+                    <dd>
+                        <option value="{{筛选下城区}}"></option>下城区</dd>
+                    <dd>
+                        <option value="{{筛选江干区}}"></option>江干区</dd>
+                    <dd>
+                        <option value="{{筛选拱墅区}}"></option>拱墅区</dd>
+                    <dd>
+                        <option value="{{筛选西湖区}}"></option>西湖区</dd>
+                    <dd>
+                        <option value="{{筛选滨江区}}"></option>滨江区</dd>
+                    <dd>
+                        <option value="{{筛选萧山区}}"></option>萧山区</dd>
+                    <dd>
+                        <option value="{{筛选余杭区}}"></option>余杭区</dd>
+                    <dd>
+                        <option value="{{筛选富阳区}}"></option>富阳区</dd>
+                </dl>
+            </li> -->
+            <li class="select-list" name="sex">
+                <dl id="select3">
+                    <dt>性别：</dt>
+                    <dd class="select-all selected">
+                        <option value=""></option> 全部</dd>
+                    <dd>
+                        <option value="1"></option>雄性</dd>
+                    <dd>
+                        <option value="0"></option>雌性</dd>
+                    <dd>
+                        <option value="-1"></option>其他</dd>
+                </dl>
+            </li>
+            <li class="select-result">
+                <dl>
+                    <dt>已选条件：</dt>
+                    <dd class="select-no">暂时没有选择过滤条件</dd>
+                </dl>
+            </li>
+        </ul>
+
+        {{range $k,$v := .pet}}
+        <div class="zhuti" style="position:relative;">
+            <ul class="list-row" style="margin-top: 100px;float: left;color:#333;font-size: 12px;">
+                <!-- 每个div side是一行布局，zhuti是一整块布局文件-->
+                <div class="side" style="margin-left: 55px;">
+                    <li class="span6 list-item car-item" style="display: inline-block;">
+                        <h4 class="media-heading">
+                            <a href="/petmatch/{{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}
+                                <div class="img-backgound">
+                                    <img src="{{$v.Coverid}}">
+                                </div>
+                            </a>
+                        </h4>
+                        {{if $.isLogin }}
+                        <div class="line1">
+                            <a href="/petmatch/{{$v.Id}}" class="collect">收藏
+                                <span>
+                                    <i class="fa fa-heart-o"></i>
+                                </span>
+                            </a>
+                            <a href="/petmatch/{{$v.Id}}" class="collect">详情
+                                <span>
+                                    <i class="fa fa-link"></i>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="line2">
+                            <i class="fa fa-map-marker"></i>{{宠物地址}}</div>
+                        {{end}}
+                    </li>
+                </div>
+            </ul>
+        </div>
+        {{end}} 
+        {{if .paginator.HasPages}}
+        <ul class="pagination pagination">
+            {{if .paginator.HasPrev}}
+            <li>
+                <a href="{{.paginator.PageLinkFirst}}">首页</a>
+            </li>
+            <li>
+                <a href="{{.paginator.PageLinkPrev}}">&laquo;</a>
+            </li>
+            {{else}}
+            <li class="disabled">
+                <a>首页</a>
+            </li>
+            <li class="disabled">
+                <a>&laquo;</a>
+            </li>
+            {{end}} {{range $index, $page := .paginator.Pages}}
+            <li{{if $.paginator.IsActive .}} class="active" {{end}}>
+                <a href="{{$.paginator.PageLink $page}}">{{$page}}</a>
+                </li>
+                {{end}} {{if .paginator.HasNext}}
+                <li>
+                    <a href="{{.paginator.PageLinkNext}}">&raquo;</a>
+                </li>
+                <li>
+                    <a href="{{.paginator.PageLinkLast}}">尾页</a>
+                </li>
+                {{else}}
+                <li class="disabled">
+                    <a>&raquo;</a>
+                </li>
+                <li class="disabled">
+                    <a>尾页</a>
+                </li>
+                {{end}}
+        </ul>
+        {{end}}
+
+    </body>
+
+</html>

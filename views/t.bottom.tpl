@@ -1,8 +1,10 @@
 {{define "bottom"}}
+<link href="../static/css/style3.css" rel="stylesheet" type="text/css">  
+<link href="../static/colors/color1.css" rel="stylesheet" type="text/css">
 <div class="container">
                 <div class="spacer-70"></div>
                 <div class="spacer-50">
-                        <img src="/static/images/zhua.png">
+                        <img src="../static/images/zhua.png">
                         <h2><span>——</span>我们的保障<span>——</span></h2>
                     </div>
                 <div class="spacer-35"></div>

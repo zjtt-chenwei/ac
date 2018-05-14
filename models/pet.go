@@ -12,7 +12,7 @@ type Pet struct {
 	Coverid     int
 	Name        string
 	Speci       string
-	variety     string
+	Variety     string
 	Sex         byte
 	Age         int
 	Intro       string
@@ -49,7 +49,7 @@ func UpdatePetInfo(id int, updPI Pet) error {
 	pet.Speci = updPI.Speci
 	pet.Partner = updPI.Partner
 	pet.Intro = updPI.Intro
-	pet.variety = updPI.variety
+	pet.Variety = updPI.Variety
 	pet.Coverid = updPI.Coverid
 
 	pet.Changed = updPI.Changed
@@ -58,12 +58,16 @@ func UpdatePetInfo(id int, updPI Pet) error {
 	return err
 }
 
+
 // 函数作用:对页面的选择结果进行筛选
 func ListPet(condMap map[string]string, page int, offset int) (num int64, err error, petarr []Pet) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("pet")
 	cond := orm.NewCondition()
 
+	if condMap["district"] != "" {
+		cond = cond.And("uarea", condMap["district"])
+	}
 	if condMap["speci"] != "" {
 		cond = cond.And("speci", condMap["speci"])
 	}
@@ -99,7 +103,9 @@ func CountPet(condMap map[string]string) int64 {
 	// 		cond = cond.And("")
 	// 	}
 	// }
-
+	if condMap["district"] != "" {
+		cond = cond.And("uarea", condMap["district"])
+	}
 	if condMap["speci"] != "" {
 		cond = cond.And("speci", condMap["speci"])
 	}
@@ -112,4 +118,19 @@ func CountPet(condMap map[string]string) int64 {
 
 	num, _ := qs.SetCond(cond).Count()
 	return num
+}
+
+// 得到某字段所有可能值（不重复）
+func DistinctNum(s string) (int64, error, []string) {
+	o := orm.NewOrm()
+	qs := o.QueryTable("pet")
+
+	var list orm.ParamsList
+	var typelist []string
+	num, err := qs.Distinct().ValuesFlat(&list, s)
+	for _, param := range list {
+		typelist = append(typelist, param.(string))
+	}
+
+	return num, err, typelist
 }
