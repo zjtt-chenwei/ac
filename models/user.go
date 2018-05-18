@@ -26,15 +26,13 @@ type UserProfile struct {
 	Email    string
 	Address  string
 	Hobby    string
-	Birth    string
+	Birth    time.Time	`orm:"auto_now_add;type(date)"`
 	Intro    string
 	Province string
 	City     string
-	Uarea    string
 	CoverUrl string
 	Pet      []*Pet `orm:"reverse(many)"`
 	User     *User  `orm:"reverse(one)"`
-	// Pet			*Pet `orm:"rel(fk)"`
 }
 
 func init() {

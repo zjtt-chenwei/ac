@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/orm"
-	_ "github.com/go-sql-driver/mysql"
 )
 
 type Pet struct {
@@ -14,7 +13,7 @@ type Pet struct {
 	Speci       string
 	Variety     string
 	Sex         byte
-	Age         int
+	Birth       time.Time `orm:"auto_now_add;type(date)"`
 	Intro       string
 	Partner     byte
 	Created     time.Time    `orm:"auto_now_add;type(datetime)"`
@@ -38,12 +37,38 @@ func (p *Pet) TableName() string {
 	return "pet"
 }
 
+func (pi *PetImg) TableName() string {
+	return "petImg"
+}
+
+
+// 添加宠物信息
+func AddPetInfo(addPet Pet) (int64, error) {
+	o := orm.NewOrm()
+	pet := new(Pet)
+
+	pet.Birth = addPet.Birth
+	pet.Name = addPet.Name
+	pet.Sex = addPet.Sex
+	pet.Speci = addPet.Speci
+	pet.Variety = addPet.Variety
+	pet.Intro = addPet.Intro
+	pet.Coverid = addPet.Coverid
+	pet.Partner = addPet.Partner
+
+	pet.Created = time.Now()
+	pet.Changed = time.Now()
+
+	id, err := o.Insert(pet)
+	return id, err
+}
+
 // 更新宠物信息
 func UpdatePetInfo(id int, updPI Pet) error {
 	o := orm.NewOrm()
 	pet := Pet{Id: id}
 
-	pet.Age = updPI.Age
+	pet.Birth = updPI.Birth
 	pet.Name = updPI.Name
 	pet.Sex = updPI.Sex
 	pet.Speci = updPI.Speci
@@ -57,7 +82,6 @@ func UpdatePetInfo(id int, updPI Pet) error {
 	_, err := o.Update(&pet)
 	return err
 }
-
 
 // 函数作用:对页面的选择结果进行筛选
 func ListPet(condMap map[string]string, page int, offset int) (num int64, err error, petarr []Pet) {
@@ -120,17 +144,3 @@ func CountPet(condMap map[string]string) int64 {
 	return num
 }
 
-// 得到某字段所有可能值（不重复）
-func DistinctNum(s string) (int64, error, []string) {
-	o := orm.NewOrm()
-	qs := o.QueryTable("pet")
-
-	var list orm.ParamsList
-	var typelist []string
-	num, err := qs.Distinct().ValuesFlat(&list, s)
-	for _, param := range list {
-		typelist = append(typelist, param.(string))
-	}
-
-	return num, err, typelist
-}
