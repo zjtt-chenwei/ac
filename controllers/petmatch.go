@@ -40,14 +40,13 @@ func (lp *ListPetController) Get() {
 	paginator := pagination.SetPaginator(lp.Ctx, offset, countPet)
 	_, _, pet := ListPet(condMap, page, offset)
 
-	_, _, specival := DistinctNum("speci")	
-	_, _, varietyval := DistinctNum("variety")
+	// _, _, specival := DistinctNum("speci")
+	// _, _, varietyval := DistinctNum("variety")
 	// _, _, specivalue := DistinctNum("")
-
 
 	lp.Data["paginator"] = paginator
 	lp.Data["pet"] = pet
-	lp.Data["speci"] = specival
-	lp.Data["variety"] = varietyval
+	// lp.Data["speci"] = specival
+	// lp.Data["variety"] = varietyval
 	lp.TplName = "petmatch.html"
 }

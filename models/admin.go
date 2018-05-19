@@ -32,7 +32,7 @@ func init() {
 }
 
 // 得到某字段所有可能值（不重复）
-func DistinctNum(tableName string, fatherTablekey string, s string) (int64, error, []string) {
+func DistinctNum(tableName string, fatherTableName string, fatherTableKey string, field string) (int64, error, []string) {
 	o := orm.NewOrm()
 	qs := o.QueryTable(tableName)
 
@@ -40,8 +40,13 @@ func DistinctNum(tableName string, fatherTablekey string, s string) (int64, erro
 	var typelist []string
 	var num int64
 	var err error
-	if fatherTablekey != "" {
-		num, err = qs.Distinct().ValuesFlat(&list, s)
+	if fatherTableName != "" {
+		num, err = qs.Filter(fatherTableName, fatherTableKey).ValuesFlat(&list, field)
+		for _, param := range list {
+			typelist = append(typelist, param.(string))
+		}
+	} else {
+		num, err = qs.ValuesFlat(&list, field)
 		for _, param := range list {
 			typelist = append(typelist, param.(string))
 		}
