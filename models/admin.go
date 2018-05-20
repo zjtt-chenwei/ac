@@ -39,13 +39,6 @@ func init() {
 	regStruct["Province"] = Province{}
 }
 
-// func (ps *PetSpeci) TableName() string {
-// 	return "PetSpeci"
-// }
-
-// func (ps *PetVari) TableName() string {
-// 	return "PetVari"
-// }
 
 
 // 得到某字段所有可能值（不重复）

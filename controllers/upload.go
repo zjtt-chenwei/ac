@@ -12,6 +12,12 @@ type UploadController struct {
 	BaseController
 }
 
+// @Title UploadFile
+// @Description 上传文件(单个)
+// @Param imgFile formData file true "上传的文件"
+// @Success 200 {string} 上传成功
+// @Failture 404 上传失败
+
 func (upl *UploadController) Post() {
 	f, h, err := upl.GetFile("imgFile")
 
