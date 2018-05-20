@@ -16,23 +16,20 @@
 
 
 <body>
-    <!--<select id="slpk" class="selectpicker" data-live-search="true" multiple></select>-->
 
-    <div class="form-group">
-        <div class="col-sm-4">
-            <select name="area" id="area" class="selectpicker" data-style="btn-primary" data-live-search="true">
-                <option value="1">广东省</option>
-                <option value="2">广西省</option>
-                <option value="3">福建省</option>
-                <option value="4">湖南省</option>
-                <option value="5">山东省</option>
-            </select>
-        </div>
+
+    <select name="speci" id="speci" class="selectpicker" data-style="btn-primary" data-live-search="true">
+        {{range $k,$v := .specis}}
+        <option value={{$k}}>{{$v}}</option>
+        {{end}}
+    </select>
+
+    </div>
     </div>
 </body>
 
 <script>
-    function getList(){
+    function getValues() {
         
     }
 </script>

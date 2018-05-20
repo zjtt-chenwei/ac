@@ -1,16 +1,18 @@
 package models
 
-import "github.com/astaxie/beego/orm"
+import (
+	"github.com/astaxie/beego/orm"
+)
 
 type PetSpeci struct {
 	Id      int
-	Speci   string
+	Name    string
 	PetVari []*PetVari `orm:"reverse(many)"`
 }
 
 type PetVari struct {
 	Id       int
-	Variety  string
+	Name     string
 	PetSpeci *PetSpeci `orm:"rel(fk)"`
 }
 
@@ -27,30 +29,55 @@ type City struct {
 	Province  *Province `orm:"rel(fk)"`
 }
 
+var regStruct map[string]interface{}
+
 func init() {
 	orm.RegisterModel(new(PetSpeci), new(PetVari), new(Province), new(City))
+
+	regStruct = make(map[string]interface{})
+	regStruct["Petspeci"] = PetSpeci{}
+	regStruct["Province"] = Province{}
 }
 
+// func (ps *PetSpeci) TableName() string {
+// 	return "PetSpeci"
+// }
+
+// func (ps *PetVari) TableName() string {
+// 	return "PetVari"
+// }
+
+
 // 得到某字段所有可能值（不重复）
-func DistinctNum(tableName string, fatherTableName string, fatherTableKey string, field string) (int64, error, []string) {
+func ShowValues(tableName string, fatherTableName string, fatherTableKey string, field string) (int64, error, []string) {
 	o := orm.NewOrm()
 	qs := o.QueryTable(tableName)
 
+
 	var list orm.ParamsList
-	var typelist []string
+	var valueList []string
 	var num int64
 	var err error
-	if fatherTableName != "" {
-		num, err = qs.Filter(fatherTableName, fatherTableKey).ValuesFlat(&list, field)
-		for _, param := range list {
-			typelist = append(typelist, param.(string))
-		}
-	} else {
+	var fk interface{}
+	if fatherTableName == "" {
 		num, err = qs.ValuesFlat(&list, field)
 		for _, param := range list {
-			typelist = append(typelist, param.(string))
+			valueList = append(valueList, param.(string))
+		}
+
+	} else {
+		var fatherMaps []orm.Params
+		num, err = orm.NewOrm().QueryTable(fatherTableName).Filter("Name", fatherTableKey).Values(&fatherMaps)
+		for _, m := range fatherMaps {
+			if m["Name"] == fatherTableKey {
+				fk = m["Id"]
+			}
+		}
+
+		num, err = qs.Filter(fatherTableName, fk).ValuesFlat(&list, field)
+		for _, param := range list {
+			valueList = append(valueList, param.(string))
 		}
 	}
-
-	return num, err, typelist
+	return num, err, valueList
 }
