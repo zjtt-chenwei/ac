@@ -41,7 +41,7 @@ func init() {
 
 
 
-// 得到某字段所有可能值（不重复）
+// 得到某字段所有可能值（不重复）	
 func ShowValues(tableName string, fatherTableName string, fatherTableKey string, field string) (int64, error, []string) {
 	o := orm.NewOrm()
 	qs := o.QueryTable(tableName)

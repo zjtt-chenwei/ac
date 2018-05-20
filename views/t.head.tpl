@@ -18,8 +18,8 @@
     <script type="text/javascript">
     
         $(document).ready(function(){
-          $('ul.nav > li').click(function () {
-            $('ul.nav > li').removeClass('active');
+          $('ul.nav > li >a').click(function () {
+            $('ul.nav > li >a').removeClass('active');
             $(this).addClass('active');
           });
         });
@@ -35,9 +35,13 @@
         /* .navbar .nav li a{
             color: #000000;
         } */
+        .navbar-default .nav li .active{
+            background-color: #FFB90F !important;
+            color:#000000;
+        }
         .navbar .nav li a:active, .navbar .nav li a:hover {
           color:#000000;
-          background-color: #ff8000 !important;
+          background-color: #FFB90F !important;
         }
         
         

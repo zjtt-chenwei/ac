@@ -96,58 +96,44 @@
                     <option value="10">桐庐</option>
                     <option value="11">淳安</option>
                 </select>
-
-                <select name="variety" id="variety" style="margin-left: 50px">
-                    <option value="">--品种--</option>
-                    <option value="藏獒">藏獒</option>
-                    <option value="古牧">古牧</option>
-                    <option value="阿拉斯加">阿拉斯加</option>
-                    <option value="大白熊">大白熊</option>
-                    <option value="金毛">金毛</option>
-                    <option value="罗威纳">罗威纳</option>
-                    <option value="圣伯纳">圣伯纳</option>
-                    <option value="大麦町">大麦町</option>
-                    <option value="拉布拉多">拉布拉多</option>
-                    <option value="杜宾">杜宾</option>
-                    <option value="苏牧">苏牧</option>
-                    <option value="德牧">德牧</option>
-                    <option value="边牧">边牧</option>
-                    <option value="高加索">高加索</option>
-                    <option value="灵缇">灵缇</option>
-                    <option value="萨摩">萨摩</option>
-                    <option value="京巴">京巴</option>
-                    <option value="巴哥">巴哥</option>
-                    <option value="约克夏">约克夏</option>
-                    <option value="西高地">西高地</option>
-                    <option value="泰迪熊">泰迪熊</option>
-                    <option value="腊肠">腊肠</option>
-                    <option value="比熊">比熊</option>
-                    <option value="比格">比格</option>
-                    <option value="雪纳瑞">雪纳瑞</option>
-                    <option value="西施">西施</option>
-                    <option value="银狐">银狐</option>
-                    <option value="吉娃娃">吉娃娃</option>
-                    <option value="博美">博美</option>
-                    <option value="蝴蝶">蝴蝶</option>
-                    <option value="哈士奇">哈士奇</option>
-                    <option value="贵宾">贵宾</option>
-                    <option value="斗牛">斗牛</option>
-                    <option value="喜乐蒂">喜乐蒂</option>
-                    <option value="可卡">可卡</option>
-                    <option value="柯基">柯基</option>
-                    <option value="松狮">松狮</option>
-                    <option value="沙皮">沙皮</option>
-                    <option value="阿富汗">阿富汗</option>
-                    <option value="其他">其他</option>
+                    <select name="speci" id="speci" onchange="speciSel()" style="margin-left: 30px">
                 </select>
 
-                <select name="xuetong" id="xuetong" style="margin-left: 50px">
+                <select name="vari" id="vari" style="margin-left: 30px;width: 50px">
+                </select>
+                <script type="text/javascript">
+                            $(function() { 
+            $("#vari").hide(); //初始化的时候第二个下拉列表隐藏  
+        });  
+        function speciSel() {//如果第一个下拉列表的值改变则调用此方法  
+            var speciName = $("#speci").val();//得到第一个下拉列表的值  
+            if(speci!=null && "" != speci&& -1 != speci){  
+                    //通过ajax传入后台，把orderTypeName数据传到后端  
+                $.post("xxxx(你的url)",{speci:speci},function(data){  
+                        var res = $.parseJSON(data);//把后台传回的json数据解析  
+                        var option;  
+                        $.each(res,function(i,n){//循环，i为下标从0开始，n为集合中对应的第i个对象  
+                            option += "<option value='"+n.speciId+"'>"+n.speciSmall+"</option>"  
+                        });  
+                        $("#vari").html(option);//将循环拼接的字符串插入第二个下拉列表  
+                        $("#vari").show();//把第二个下拉列表展示  
+                });  
+              
+            }else {  
+                $("#vari").hide();  
+            }  
+        };    
+                
+                </script>
+                
+
+                <select name="xuetong" id="xuetong" style="margin-left: 30px">
                     <option value="" selected>--血统证明--</option>
                     <option value="无">无血统证明</option>
                     <option value="有">有血统证明</option>
                 </select>
 
-                <select name="xingbie" id="xingbie" style="margin-left: 50px">
+                <select name="xingbie" id="xingbie" style="margin-left: 30px">
                     <option value="" selected>--性别--</option>
                     <option value="公">公</option>
                     <option value="母">母</option>
