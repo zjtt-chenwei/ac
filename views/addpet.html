@@ -18,7 +18,8 @@
 <body>
 
 <div>
-    <select name="speci" id="speci" class="selectpicker" data-style="btn-primary" data-live-search="true" onchange="getValues(this.val)">
+    {{.json }}
+    <!-- <select name="speci" id="speci" class="selectpicker" data-style="btn-primary" data-live-search="true" onchange="getValues(this.val)">
         {{range $k,$v := .specis}}
         <option value={{$v}}>{{$v}}</option>
         {{end}}
@@ -28,32 +29,14 @@
         {{range $k,$v := .varis}}
         <option value={{$v}}>{{$v}}</option>
         {{end}}
-    </select>
+    </select> -->
     
 </div>
 
 </body>
 
 <script>
-    $(document).ready(function(){
-        $('#speci').on('change', function(){
-            getValues(this.options[this.options.selectedIndex].value)
-        })
-    })
-
-    function getValues(val) {
-
-        $.ajax({
-            type:"get",
-            url:"#",
-            data:{"speci":val},
-            error:function() {
-            },
-            success:function(data) {
-            },
-        })
-        
-    }
+    
 </script>
 
 </html>

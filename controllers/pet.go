@@ -31,6 +31,7 @@ func (ap *AddPetController) Get() {
 	vmaps["vari"] = variMap
 
 	ap.Data["json"] = vmaps
+	ap.Data["specis"] = speciMap
 	ap.ServeJSON()
 
 	ap.TplName = "addpet.html"
