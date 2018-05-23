@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/astaxie/beego/orm"
+	"github.com/astaxie/beego"
 )
 
 type PetSpeci struct {
@@ -39,38 +40,27 @@ func init() {
 	regStruct["Province"] = Province{}
 }
 
-
-
-// 得到某字段所有可能值（不重复）	
-func ShowValues(tableName string, fatherTableName string, fatherTableKey string, field string) (int64, error, []string) {
+// 得到一张表的所有内容，并且以键值对的结构存储，键：字段名；值：该字段所有值的数组
+func ShowValues(tableName string) (map[string]interface{}) {
+	dbname := beego.AppConfig.String("mysqldb")
 	o := orm.NewOrm()
 	qs := o.QueryTable(tableName)
 
+	var vmap map[string]interface{}
+	vmap = make(map[string]interface{}) //初始化
 
 	var list orm.ParamsList
-	var valueList []string
-	var num int64
-	var err error
-	var fk interface{}
-	if fatherTableName == "" {
-		num, err = qs.ValuesFlat(&list, field)
-		for _, param := range list {
-			valueList = append(valueList, param.(string))
-		}
+	var fieldList orm.ParamsList
+	_, err1 := o.Raw("select COLUMN_NAME from information_schema.columns where table_name= ? and table_schema= ? ", tableName,dbname).ValuesFlat(&fieldList)
+	if err1 !=nil{
+	}
 
-	} else {
-		var fatherMaps []orm.Params
-		num, err = orm.NewOrm().QueryTable(fatherTableName).Filter("Name", fatherTableKey).Values(&fatherMaps)
-		for _, m := range fatherMaps {
-			if m["Name"] == fatherTableKey {
-				fk = m["Id"]
-			}
-		}
-
-		num, err = qs.Filter(fatherTableName, fk).ValuesFlat(&list, field)
-		for _, param := range list {
-			valueList = append(valueList, param.(string))
+	for _,v := range fieldList{
+		filed := v.(string)
+		_,err2:=qs.ValuesFlat(&list,filed)
+		if err2 == nil{
+			vmap[filed] = list
 		}
 	}
-	return num, err, valueList
+	return  vmap
 }

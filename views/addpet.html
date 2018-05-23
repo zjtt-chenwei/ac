@@ -17,36 +17,39 @@
 
 <body>
 
-
-    <select name="speci" id="speci" class="selectpicker" data-style="btn-primary" data-live-search="true">
+<div>
+    <select name="speci" id="speci" class="selectpicker" data-style="btn-primary" data-live-search="true" onchange="getValues(this.val)">
         {{range $k,$v := .specis}}
-        <option value={{$k}}>{{$v}}</option>
+        <option value={{$v}}>{{$v}}</option>
         {{end}}
     </select>
 
-
-
-
-    <select name="variety" id="variety" class="selectpicker" data-style="btn-primary" data-live-search="true">
+    <select name="variety" id="variety" class="selectpicker" data-style="btn-primary" data-live-search="true" >
         {{range $k,$v := .varis}}
-        <option value={{$k}}>{{$v}}</option>
+        <option value={{$v}}>{{$v}}</option>
         {{end}}
     </select>
     
 </div>
-    </div>
+
 </body>
 
 <script>
-    function getValues() {
-        var sval = $("#speci").val();
+    $(document).ready(function(){
+        $('#speci').on('change', function(){
+            getValues(this.options[this.options.selectedIndex].value)
+        })
+    })
+
+    function getValues(val) {
+
         $.ajax({
             type:"get",
-            url:"url",
-            data:{"speci":sval},
-            error:function(){
+            url:"#",
+            data:{"speci":val},
+            error:function() {
             },
-            success:function(){
+            success:function(data) {
             },
         })
         

@@ -15,18 +15,23 @@ func (ap *AddPetController) Get() {
 	sex := ap.GetString("sex")
 	name := ap.GetString("name")
 
+	var vmaps map[string]interface{}
+	vmaps = make(map[string]interface{})
+
 	condMap := make(map[string]string)
 	condMap["speci"] = speci
 	condMap["sex"] = sex
 	condMap["variety"] = variety
 	condMap["name"] = name
-	speci = "猫"
 
-	_, _, specis := ShowValues("PetSpeci", "", "", "Name")
-	_, _, varis := ShowValues("PetVari", "PetSpeci", speci, "Name")
+	speciMap := ShowValues("PetSpeci")
+	variMap := ShowValues("PetVari")
 
-	ap.Data["specis"] = specis
-	ap.Data["varis"] = varis
+	vmaps["speci"] = speciMap
+	vmaps["vari"] = variMap
+
+	ap.Data["json"] = vmaps
+	ap.ServeJSON()
 
 	ap.TplName = "addpet.html"
 }

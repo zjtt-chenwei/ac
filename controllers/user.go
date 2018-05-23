@@ -53,6 +53,28 @@ func (lout *LogoutController) Get() {
 	lout.Redirect("/", 302)
 }
 
+type RegisterController struct {
+	BaseController
+}
+
+func (r *RegisterController) Get() {
+	r.TplName = "register.html"
+}
+
+func (r *RegisterController) Post() {
+	uname := r.Input().Get("uname")
+	pwd := r.Input().Get("pwd")
+
+	err := models.Register(uname, pwd)
+
+	if err != nil {
+		beego.Error(err)
+	}
+
+	r.Redirect("/", 302)
+}
+
+
 // func (lin *LoginController) Get() {
 // 	isExit := lin.Input().Get("exit") == "true"
 // 	if isExit {
@@ -104,24 +126,3 @@ func (lout *LogoutController) Get() {
 // 		return false
 // 	}
 // }
-
-type RegisterController struct {
-	BaseController
-}
-
-func (r *RegisterController) Get() {
-	r.TplName = "register.html"
-}
-
-func (r *RegisterController) Post() {
-	uname := r.Input().Get("uname")
-	pwd := r.Input().Get("pwd")
-
-	err := models.Register(uname, pwd)
-
-	if err != nil {
-		beego.Error(err)
-	}
-
-	r.Redirect("/", 302)
-}
