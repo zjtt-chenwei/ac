@@ -56,8 +56,6 @@ func ShowValues(tableName string) interface{} {
 	return maps
 
 
-
-
 // 这10行代码是用来正则来做表名的转换，因为beego的orm对于"aaBb"这种命名的字符串会自动在数据库那里转为”aa_Bb“,而后面为了查列名用了原生的sql语句，
 // 没有使用orm，所以要对传入的表名进行转换，即在合适的位置添加"_"
 

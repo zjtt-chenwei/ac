@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	. "actest/models"
 )
 
@@ -30,9 +31,13 @@ func (ap *AddPetController) Get() {
 	vmaps["speci"] = speciMap
 	vmaps["vari"] = variMap
 
-	ap.Data["json"] = vmaps
+	jsons, errs := json.Marshal(vmaps)
+	if errs !=nil{
+	}
+
+	ap.Data["json"] = string(jsons)
 	ap.Data["specis"] = speciMap
-	ap.ServeJSON()
+	// ap.ServeJSON()
 
 	ap.TplName = "addpet.html"
 }
