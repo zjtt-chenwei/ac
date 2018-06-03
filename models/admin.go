@@ -4,6 +4,7 @@ import (
 	// "regexp"
 
 	// "github.com/astaxie/beego"
+
 	"github.com/astaxie/beego/orm"
 )
 
@@ -36,28 +37,22 @@ var regStruct map[string]interface{}
 
 func init() {
 	orm.RegisterModel(new(PetSpeci), new(PetVari), new(Province), new(City))
-
-	regStruct = make(map[string]interface{})
-	regStruct["Petspeci"] = PetSpeci{}
-	regStruct["Province"] = Province{}
 }
 
-// 得到一张表的所有内容，并且以键值对的结构存储，键：字段名；值：该字段所有值的数组
+
 func ShowValues(tableName string) interface{} {
 	// dbname := beego.AppConfig.String("mysqldb")
 	o := orm.NewOrm()
 	qs := o.QueryTable(tableName)
 
-	var maps [] orm.Params
-	_,err := qs.Values(&maps)
-	if err != nil{
+	var maps []orm.Params
+	_, err := qs.Values(&maps)
+	if err != nil {
 	}
-
 	return maps
-
-
-// 这10行代码是用来正则来做表名的转换，因为beego的orm对于"aaBb"这种命名的字符串会自动在数据库那里转为”aa_Bb“,而后面为了查列名用了原生的sql语句，
-// 没有使用orm，所以要对传入的表名进行转换，即在合适的位置添加"_"
+	// 得到一张表的所有内容，并且以键值对的结构存储，键：字段名；值：该字段所有值的数组
+	// 这10行代码是用来正则来做表名的转换，因为beego的orm对于"aaBb"这种命名的字符串会自动在数据库那里转为”aa_Bb“,而后面为了查列名用了原生的sql语句，
+	// 没有使用orm，所以要对传入的表名进行转换，即在合适的位置添加"_"
 
 	// reg1 := regexp.MustCompile(`[A-Z]+`)
 	// regstrings := reg1.FindAllString(tableName, -1)

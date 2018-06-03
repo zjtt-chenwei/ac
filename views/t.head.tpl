@@ -41,7 +41,7 @@
         }
         .navbar .nav li a:active, .navbar .nav li a:hover {
           color:#000000;
-          background-color: #FFB90F !important;
+          background-color: #dddddd !important;
         }
         
         

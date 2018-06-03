@@ -17,10 +17,10 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="/" class="active">首页 <span class="sr-only">(current)</span></a></li>
-        <li><a href="../static/petmatch" >宠物婚介</a></li>
+        <li><a href="/petmatch" >宠物婚介</a></li>
         <li><a href="../static/baike" >宠物百科</a></li>
         <li><a href="../static/shop" >宠物用品</a></li>
-        <li><a href="../static/about" >关于我们</a></li>
+        <li><a href="addpet.html" >关于我们</a></li>
       </ul>
       <!-- <form class="navbar-form navbar-left">
         <div class="form-group">

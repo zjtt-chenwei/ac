@@ -1,29 +1,63 @@
 package controllers
 
 import (
-	"encoding/json"
 	. "actest/models"
+	"encoding/json"
+	"strings"
+	"time"
 )
 
 type AddPetController struct {
 	BaseController
 }
 
-func (ap *AddPetController) Get() {
+func (ap *AddPetController) Get(){
+	ap.TplName = "addpet.html"
+}
+
+func (ap *AddPetController) Post() {
 	ap.Data["IsAddpet"] = true
 	speci := ap.GetString("speci")
 	variety := ap.GetString("variety")
-	sex := ap.GetString("sex")
+	sex, _ := ap.GetInt8("sex")
 	name := ap.GetString("name")
+	intro := ap.GetString("intro")
+	birthString := ap.GetString("birth")
+	partner, _ := ap.GetInt8("partner")
+	f, h, err := ap.GetFile("imgFile")
+	defer f.Close()
+	if err != nil {
+		ap.Data["jsonErr"] = map[string]interface{}{"error": 1, "message": err}
+	}
+	dir, filename := UploadFile(h)
+	fileURL := dir + "/" + filename
+	ap.SaveToFile("imgFile", fileURL)
+	ap.Data["jsonErr2"] = map[string]interface{}{"error": 0, "url": strings.Replace(dir, ".", "", 1) + "/" + filename}
+
+	birth, _ := time.Parse(birthString, "2000-01-01")
+
+	var newpetimg PetImg
+	var newpet Pet
+	newpetimg.ImgURL = fileURL
+	newpetimg.Cover = 1
+
+	newpet.Sex = sex
+	newpet.Variety = variety
+	newpet.Speci = speci
+	newpet.Partner = partner
+	newpet.Intro = intro
+	newpet.Birth = birth
+	newpet.Name = name
+
+	err1 := AddPetInfo(newpet, newpetimg)
+	if err1 !=nil{
+	
+	}
 
 	var vmaps map[string]interface{}
 	vmaps = make(map[string]interface{})
 
-	condMap := make(map[string]string)
-	condMap["speci"] = speci
-	condMap["sex"] = sex
-	condMap["variety"] = variety
-	condMap["name"] = name
+	// condMap := make(map[string]string)
 
 	speciMap := ShowValues("PetSpeci")
 	variMap := ShowValues("PetVari")
@@ -32,7 +66,7 @@ func (ap *AddPetController) Get() {
 	vmaps["vari"] = variMap
 
 	jsons, errs := json.Marshal(vmaps)
-	if errs !=nil{
+	if errs != nil {
 	}
 
 	ap.Data["json"] = string(jsons)

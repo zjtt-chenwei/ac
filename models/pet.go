@@ -8,25 +8,24 @@ import (
 
 type Pet struct {
 	Id          int
-	Coverid     int
 	Name        string
 	Speci       string
 	Variety     string
-	Sex         byte
+	Sex         int8
 	Birth       time.Time `orm:"auto_now_add;type(date)"`
 	Intro       string
-	Partner     byte
+	Partner     int8
 	Created     time.Time    `orm:"auto_now_add;type(datetime)"`
 	Changed     time.Time    `orm:"auto_now_add;type(datetime)"`
 	UserProfile *UserProfile `orm:"rel(fk)"`
-	PetImg      *PetImg      `orm:"null;rel(one);on_delete(set_null)"`
+	PetImg      []*PetImg    `orm:"null;reverse(many);on_delete(set_null)"`
 }
 
 type PetImg struct {
 	Id     int
-	cover  byte
-	imgURL string
-	Pet    *Pet `orm:"reverse(one)"`
+	Cover  int8 `orm:"default(0)"`
+	ImgURL string
+	Pet    *Pet `orm:"rel(fk)"`
 }
 
 func init() {
@@ -41,11 +40,15 @@ func (pi *PetImg) TableName() string {
 	return "petImg"
 }
 
-
 // 添加宠物信息
-func AddPetInfo(addPet Pet) (int64, error) {
+func AddPetInfo(addPet Pet, addPetIMG PetImg) error {
 	o := orm.NewOrm()
 	pet := new(Pet)
+	petimg := new(PetImg)
+
+	petimg.ImgURL = addPetIMG.ImgURL
+	petimg.Cover = addPetIMG.Cover
+	petimg.Pet = pet
 
 	pet.Birth = addPet.Birth
 	pet.Name = addPet.Name
@@ -53,20 +56,24 @@ func AddPetInfo(addPet Pet) (int64, error) {
 	pet.Speci = addPet.Speci
 	pet.Variety = addPet.Variety
 	pet.Intro = addPet.Intro
-	pet.Coverid = addPet.Coverid
 	pet.Partner = addPet.Partner
 
 	pet.Created = time.Now()
 	pet.Changed = time.Now()
 
-	id, err := o.Insert(pet)
-	return id, err
+	_, err := o.Insert(pet)
+	return err
 }
 
 // 更新宠物信息
-func UpdatePetInfo(id int, updPI Pet) error {
+func UpdatePetInfo(id int, updPI Pet, updPetIMG PetImg) error {
 	o := orm.NewOrm()
 	pet := Pet{Id: id}
+	petimg := new(PetImg)
+
+	petimg.ImgURL = updPetIMG.ImgURL
+	petimg.Cover = updPetIMG.Cover
+	petimg.Pet = &pet
 
 	pet.Birth = updPI.Birth
 	pet.Name = updPI.Name
@@ -75,7 +82,6 @@ func UpdatePetInfo(id int, updPI Pet) error {
 	pet.Partner = updPI.Partner
 	pet.Intro = updPI.Intro
 	pet.Variety = updPI.Variety
-	pet.Coverid = updPI.Coverid
 
 	pet.Changed = updPI.Changed
 
@@ -143,4 +149,3 @@ func CountPet(condMap map[string]string) int64 {
 	num, _ := qs.SetCond(cond).Count()
 	return num
 }
-
