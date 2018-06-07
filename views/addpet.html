@@ -115,16 +115,20 @@
         .form-group{
             /* padding: 10px 10px 10px 0px;  */
             /* border:1px solid black; */
-            text-align: center;
-            vertical-align: middle; 
+            text-align: left;
+            font-size: 16px;
+            /* vertical-align: middle;  */
         }
         .control-label{
             height: 100%;
             /* border:1px solid black; */
             padding: 5px 0px; /*  内边距 上下/左右 */
+            text-align: center;
+            font-size: 16px;
         }
         .form-control{
             width: 400px;
+            /* border:1px solid black; */
         }
         
         #introduce{
@@ -191,7 +195,7 @@
     </select> -->
 
 <form role="form" enctype="multipart/form-data">
-    <legend>发布宠物信息</legend>
+    <legend style="font-size: 40px;">上传宠物信息</legend>
     种类：<select class="selectpicker"  id="speci-select">
         <option>请选择</option>
     </select>
@@ -204,9 +208,10 @@
         <input id="name" class="form-control" type="text" placeholder="请输入宠物名" value="">
     </div>
 </br>
-    <div class="form-group">
+    <div class="form-group" >
         <label class="col-sm-3 control-label">性别 : </label> 
-        <input id="sex" class="form-control" type="text" placeholder="请输入性别" value="">
+        <input id="sex" type="radio" checked="checked" name="sex" style="width: 16px;height: 16px;" value="1"/>雄
+        <input id="woman" type="radio"  name="sex" style="width: 16px;height: 16px;" value="0" />雌
     </div>    
 </br>
     <div class="form-group">
@@ -216,7 +221,9 @@
 </br>
     <div class="form-group">
         <label class="col-sm-3 control-label">是否有配对意向 : </label> 
-        <input id="yes-no" class="form-control" type="text" placeholder="请输入是/否" value="">     
+        <input id="yes" type="radio" checked="checked" name="" style="width: 16px;height: 16px;" value="1"/>有
+        <input id="no" type="radio"  name="" style="width: 16px;height: 16px;" value="0"/>无
+            
     </div>
     <textarea  id="introduce" placeholder="宠物简介（可为空）" value=""></textarea></br>
     <!-- <input type="button" value="获取日期" onclick="showDate();" /> -->
