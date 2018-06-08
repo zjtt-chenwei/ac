@@ -142,15 +142,15 @@
             position: relative;
             display: inline-block;
             width: 100px;
-            overflow: hidden;  /* 将input溢出span的部分隐藏 真正的宽度变为span的宽度*/
+            overflow: hidden; /*  将input溢出span的部分隐藏 真正的宽度变为span的宽度 */
         }
 
         .fileinput-button input{
-             position: absolute;   /* 通过将外围的span设成display:relative，将input设成display:absolute的方式让他们都脱离文档流。 */
+            position: absolute;   /* 通过将外围的span设成display:relative，将input设成display:absolute的方式让他们都脱离文档流。 */
             right: 0px;  /* 通过right的定位方式把输入框移到左边去的方式，可以在IE下回避出现鼠标指针变成输入态的情况。 */
             top: 0px;
             opacity: 0;
-            -ms-filter: 'alpha(opacity=0)';
+            /* -ms-filter: 'alpha(opacity=0)'; */
             font-size: 20px;  /* input是默认大小，无法覆盖span下部的。通过为input设置大点的字号将其撑大的方式来解决覆盖问题。 */
         }
 
@@ -194,7 +194,7 @@
         <option >请选择</option>
     </select> -->
 
-<form role="form" enctype="multipart/form-data">
+<form role="form" enctype="multipart/form-data" method="get">
     <legend style="font-size: 40px;">上传宠物信息</legend>
     种类：<select class="selectpicker"  id="speci-select">
         <option>请选择</option>
@@ -221,8 +221,8 @@
 </br>
     <div class="form-group">
         <label class="col-sm-3 control-label">是否有配对意向 : </label> 
-        <input id="yes" type="radio" checked="checked" name="" style="width: 16px;height: 16px;" value="1"/>有
-        <input id="no" type="radio"  name="" style="width: 16px;height: 16px;" value="0"/>无
+        <input id="yes" type="radio" checked="checked" name="partner" style="width: 16px;height: 16px;" value="1"/>有
+        <input id="no" type="radio"  name="partner" style="width: 16px;height: 16px;" value="0"/>无
             
     </div>
     <textarea  id="introduce" placeholder="宠物简介（可为空）" value=""></textarea></br>
@@ -262,9 +262,13 @@
         }
     })
     
-   
+    
 
 
 </script>
 </body>
 </html>
+
+
+   
+ 
