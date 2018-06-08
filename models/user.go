@@ -21,7 +21,7 @@ type UserProfile struct {
 	Id       int
 	Realname string
 	Account  string
-	Sex      int8
+	Sex      bool
 	Phone    string
 	Email    string
 	Address  string

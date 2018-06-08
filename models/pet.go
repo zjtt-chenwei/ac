@@ -11,10 +11,10 @@ type Pet struct {
 	Name        string
 	Speci       string
 	Variety     string
-	Sex         int8
+	Sex         bool
 	Birth       time.Time `orm:"auto_now_add;type(date)"`
 	Intro       string
-	Partner     int8
+	Partner     bool
 	Created     time.Time    `orm:"auto_now_add;type(datetime)"`
 	Changed     time.Time    `orm:"auto_now_add;type(datetime)"`
 	UserProfile *UserProfile `orm:"rel(fk)"`
@@ -23,7 +23,7 @@ type Pet struct {
 
 type PetImg struct {
 	Id     int
-	Cover  int8 `orm:"default(0)"`
+	Cover  bool `orm:"default(0)"`
 	ImgURL string
 	Pet    *Pet `orm:"rel(fk)"`
 }

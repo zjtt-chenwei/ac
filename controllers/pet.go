@@ -3,6 +3,7 @@ package controllers
 import (
 	. "actest/models"
 	"encoding/json"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -11,7 +12,7 @@ type AddPetController struct {
 	BaseController
 }
 
-func (ap *AddPetController) Get(){
+func (ap *AddPetController) Get() {
 	ap.TplName = "addpet.html"
 }
 
@@ -19,11 +20,15 @@ func (ap *AddPetController) Post() {
 	ap.Data["IsAddpet"] = true
 	speci := ap.GetString("speci")
 	variety := ap.GetString("variety")
-	sex, _ := ap.GetInt8("sex")
+	sexstr := ap.GetString("sex")
 	name := ap.GetString("name")
 	intro := ap.GetString("intro")
 	birthString := ap.GetString("birth")
-	partner, _ := ap.GetInt8("partner")
+	partnerstr := ap.GetString("partner")
+	
+	sex, _ := strconv.ParseBool(sexstr)
+	partner, _ := strconv.ParseBool(partnerstr)
+
 	f, h, err := ap.GetFile("imgFile")
 	defer f.Close()
 	if err != nil {
@@ -39,7 +44,7 @@ func (ap *AddPetController) Post() {
 	var newpetimg PetImg
 	var newpet Pet
 	newpetimg.ImgURL = fileURL
-	newpetimg.Cover = 1
+	newpetimg.Cover = true
 
 	newpet.Sex = sex
 	newpet.Variety = variety
@@ -50,8 +55,8 @@ func (ap *AddPetController) Post() {
 	newpet.Name = name
 
 	err1 := AddPetInfo(newpet, newpetimg)
-	if err1 !=nil{
-	
+	if err1 != nil {
+
 	}
 
 	var vmaps map[string]interface{}
