@@ -17,15 +17,15 @@ type Pet struct {
 	Partner     bool
 	Created     time.Time    `orm:"auto_now_add;type(datetime)"`
 	Changed     time.Time    `orm:"auto_now_add;type(datetime)"`
-	UserProfile *UserProfile `orm:"rel(fk)"`
+	// UserProfile *UserProfile `orm:"rel(fk)"`
 	PetImg      []*PetImg    `orm:"null;reverse(many);on_delete(set_null)"`
 }
 
 type PetImg struct {
 	Id     int
-	Cover  bool `orm:"default(0)"`
-	ImgURL string
-	Pet    *Pet `orm:"rel(fk)"`
+	Cover  bool   `orm:"default(0)"`
+	ImgURL string `orm:"column(imgURL)"`
+	Pet    *Pet   `orm:"rel(fk)"`
 }
 
 func init() {
@@ -41,8 +41,9 @@ func (pi *PetImg) TableName() string {
 }
 
 // 添加宠物信息
-func AddPetInfo(addPet Pet, addPetIMG PetImg) error {
+func AddPetInfo(addPet Pet, addPetIMG PetImg) (error, error) {
 	o := orm.NewOrm()
+	o.Using("default")
 	pet := new(Pet)
 	petimg := new(PetImg)
 
@@ -61,8 +62,9 @@ func AddPetInfo(addPet Pet, addPetIMG PetImg) error {
 	pet.Created = time.Now()
 	pet.Changed = time.Now()
 
-	_, err := o.Insert(pet)
-	return err
+	_, err1 := o.Insert(pet)
+	_, err2 := o.Insert(petimg)
+	return err1, err2
 }
 
 // 更新宠物信息

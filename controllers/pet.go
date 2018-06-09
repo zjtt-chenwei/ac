@@ -13,11 +13,37 @@ type AddPetController struct {
 }
 
 func (ap *AddPetController) Get() {
+	// if !ap.isLogin{
+	// 	ap.Redirect("/login",302)
+	// 	return 
+	// }
+	var vmaps map[string]interface{}
+	vmaps = make(map[string]interface{})
+
+	speciMap := ShowValues("PetSpeci")
+	variMap := ShowValues("PetVari")
+
+	vmaps["speci"] = speciMap
+	vmaps["vari"] = variMap
+
+	jsons, errs := json.Marshal(vmaps)
+	if errs != nil {
+	}
+
+	ap.Data["json"] = string(jsons)
+	ap.Data["specis"] = speciMap
+	// ap.ServeJSON()
+
 	ap.TplName = "addpet.html"
 }
 
 func (ap *AddPetController) Post() {
-	ap.Data["IsAddpet"] = true
+	// if !ap.isLogin{
+	// 	ap.Redirect("/login",302)
+	// 	return 
+	// }
+	// uname := ap.GetSession("uname")
+
 	speci := ap.GetString("speci")
 	variety := ap.GetString("variety")
 	sexstr := ap.GetString("sex")
@@ -25,7 +51,7 @@ func (ap *AddPetController) Post() {
 	intro := ap.GetString("intro")
 	birthString := ap.GetString("birth")
 	partnerstr := ap.GetString("partner")
-	
+
 	sex, _ := strconv.ParseBool(sexstr)
 	partner, _ := strconv.ParseBool(partnerstr)
 
@@ -54,29 +80,9 @@ func (ap *AddPetController) Post() {
 	newpet.Birth = birth
 	newpet.Name = name
 
-	err1 := AddPetInfo(newpet, newpetimg)
-	if err1 != nil {
-
+	err1, err2:= AddPetInfo(newpet, newpetimg)
+	if err1 != nil && err2!=nil {
+		ap.Ctx.Redirect(302, "/login")
 	}
-
-	var vmaps map[string]interface{}
-	vmaps = make(map[string]interface{})
-
-	// condMap := make(map[string]string)
-
-	speciMap := ShowValues("PetSpeci")
-	variMap := ShowValues("PetVari")
-
-	vmaps["speci"] = speciMap
-	vmaps["vari"] = variMap
-
-	jsons, errs := json.Marshal(vmaps)
-	if errs != nil {
-	}
-
-	ap.Data["json"] = string(jsons)
-	ap.Data["specis"] = speciMap
-	// ap.ServeJSON()
-
-	ap.TplName = "addpet.html"
+	ap.Ctx.Redirect(302, "/")
 }
