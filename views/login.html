@@ -122,17 +122,28 @@
 			border-radius: 5px;
 		}
 
-
 		.Login-options {
 			margin: 30px auto 80px 45px;
-			font-size: 14px;
+			font-size: 16px;
 		}
 
 		.Register-options {
 			margin: 30px auto 80px 45px;
-			font-size: 14px;
+			font-size: 16px;
+			
 		}
-
+		.form-group{
+            margin-top: -35px;
+            /* border:1px solid black; */
+            text-align: center;
+            font-size: 20px;
+            color: #FFB90F
+			
+        }
+		#action{
+			width: 20px;
+			height: 20px;
+		}
 
 		/* .xieyi {
 			float: left;
@@ -257,8 +268,10 @@
 			</div>
 			<div class="SignContainer">
 				<div class="Login-content">
-					<form>
-
+					<form action="" method="POST">
+						<div class="form-group">
+							<input name="action" id="action" type="radio" checked="checked" value="login">登录
+						</div>
 						<div class="input-group">
 							<input name="username" id="username" type="text" class="form-control" placeholder="手机号或邮箱" value>
 						</div>
@@ -297,7 +310,10 @@
 			</div>
 			<div class="SignContainer">
 				<div class="Register-content">
-					<form>
+					<form method="POST" action="">
+						<div class="form-group">
+							<input name="action" id="action" type="radio"  checked="checked" value="regist" >注册
+						</div>
 						<div class="input-group">
 							<input name="teluname" id="teluname" type="text" class="form-control" placeholder="手机号" value>
 						</div>
