@@ -37,6 +37,7 @@ func (lin *LoginController) Post() {
 
 	if err == nil {
 		lin.SetSession("userLogin", "1")
+		lin.SetSession("uname",uname)
 		lin.Data["json"] = map[string]interface{}{"code": 1, "message": "贺喜你，登录成功", "user": user}
 	} else {
 		lin.Data["json"] = map[string]interface{}{"code": 0, "message": "登录失败"}
@@ -50,6 +51,7 @@ type LogoutController struct {
 
 func (lout *LogoutController) Get() {
 	lout.DelSession("userLogin")
+	lout.DelSession("uname")
 	lout.Redirect("/", 302)
 }
 

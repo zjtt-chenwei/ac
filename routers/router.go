@@ -16,6 +16,6 @@ func init() {
 	beego.Router("/logout",&controllers.LogoutController{})
 	beego.Router("/register", &controllers.RegisterController{})
 	beego.Router("/petmatch", &controllers.ListPetController{})
-	beego.Router("/addpet/?:speci/?:variety", &controllers.AddPetController{})
+	beego.Router("/addpet", &controllers.AddPetController{})
 	beego.Router("/404.html", &controllers.BaseController{}, "*:Go404")
 }

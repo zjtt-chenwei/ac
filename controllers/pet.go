@@ -3,6 +3,7 @@ package controllers
 import (
 	. "actest/models"
 	"encoding/json"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -11,53 +12,13 @@ type AddPetController struct {
 	BaseController
 }
 
-func (ap *AddPetController) Get(){
-	ap.TplName = "addpet.html"
-}
-
-func (ap *AddPetController) Post() {
-	ap.Data["IsAddpet"] = true
-	speci := ap.GetString("speci")
-	variety := ap.GetString("variety")
-	sex, _ := ap.GetInt8("sex")
-	name := ap.GetString("name")
-	intro := ap.GetString("intro")
-	birthString := ap.GetString("birth")
-	partner, _ := ap.GetInt8("partner")
-	f, h, err := ap.GetFile("imgFile")
-	defer f.Close()
-	if err != nil {
-		ap.Data["jsonErr"] = map[string]interface{}{"error": 1, "message": err}
-	}
-	dir, filename := UploadFile(h)
-	fileURL := dir + "/" + filename
-	ap.SaveToFile("imgFile", fileURL)
-	ap.Data["jsonErr2"] = map[string]interface{}{"error": 0, "url": strings.Replace(dir, ".", "", 1) + "/" + filename}
-
-	birth, _ := time.Parse(birthString, "2000-01-01")
-
-	var newpetimg PetImg
-	var newpet Pet
-	newpetimg.ImgURL = fileURL
-	newpetimg.Cover = 1
-
-	newpet.Sex = sex
-	newpet.Variety = variety
-	newpet.Speci = speci
-	newpet.Partner = partner
-	newpet.Intro = intro
-	newpet.Birth = birth
-	newpet.Name = name
-
-	err1 := AddPetInfo(newpet, newpetimg)
-	if err1 !=nil{
-	
-	}
-
+func (ap *AddPetController) Get() {
+	// if !ap.isLogin{
+	// 	ap.Redirect("/login",302)
+	// 	return 
+	// }
 	var vmaps map[string]interface{}
 	vmaps = make(map[string]interface{})
-
-	// condMap := make(map[string]string)
 
 	speciMap := ShowValues("PetSpeci")
 	variMap := ShowValues("PetVari")
@@ -74,4 +35,54 @@ func (ap *AddPetController) Post() {
 	// ap.ServeJSON()
 
 	ap.TplName = "addpet.html"
+}
+
+func (ap *AddPetController) Post() {
+	// if !ap.isLogin{
+	// 	ap.Redirect("/login",302)
+	// 	return 
+	// }
+	// uname := ap.GetSession("uname")
+
+	speci := ap.GetString("speci")
+	variety := ap.GetString("variety")
+	sexstr := ap.GetString("sex")
+	name := ap.GetString("name")
+	intro := ap.GetString("intro")
+	birthString := ap.GetString("birth")
+	partnerstr := ap.GetString("partner")
+
+	sex, _ := strconv.ParseBool(sexstr)
+	partner, _ := strconv.ParseBool(partnerstr)
+
+	f, h, err := ap.GetFile("imgFile")
+	defer f.Close()
+	if err != nil {
+		ap.Data["jsonErr"] = map[string]interface{}{"error": 1, "message": err}
+	}
+	dir, filename := UploadFile(h)
+	fileURL := dir + "/" + filename
+	ap.SaveToFile("imgFile", fileURL)
+	ap.Data["jsonErr2"] = map[string]interface{}{"error": 0, "url": strings.Replace(dir, ".", "", 1) + "/" + filename}
+
+	birth, _ := time.Parse(birthString, "2000-01-01")
+
+	var newpetimg PetImg
+	var newpet Pet
+	newpetimg.ImgURL = fileURL
+	newpetimg.Cover = true
+
+	newpet.Sex = sex
+	newpet.Variety = variety
+	newpet.Speci = speci
+	newpet.Partner = partner
+	newpet.Intro = intro
+	newpet.Birth = birth
+	newpet.Name = name
+
+	err1, err2:= AddPetInfo(newpet, newpetimg)
+	if err1 != nil && err2!=nil {
+		ap.Ctx.Redirect(302, "/login")
+	}
+	ap.Ctx.Redirect(302, "/")
 }
