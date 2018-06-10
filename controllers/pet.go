@@ -2,6 +2,7 @@ package controllers
 
 import (
 	. "actest/models"
+	"github.com/astaxie/beego"
 	"encoding/json"
 	"strconv"
 	"strings"
@@ -42,7 +43,17 @@ func (ap *AddPetController) Post() {
 		ap.Redirect("/login",302)
 		return 
 	}
-	// uname := ap.GetSession("uname")
+	user := new(User)
+	var err error
+	account := ap.GetSession("account")
+	if accountstr, ok := account.(string);ok{
+		err, user = GetUserByAccount(accountstr)
+		if err != nil {
+			beego.Error(err)
+		}
+	}
+	
+	userid := user.Id
 
 	speci := ap.GetString("speci")
 	variety := ap.GetString("variety")
@@ -80,9 +91,9 @@ func (ap *AddPetController) Post() {
 	newpet.Birth = birth
 	newpet.Name = name
 
-	err1 ,err2:= AddPetInfo(newpet, newpetimg)
-	if err1 != nil && err2!=nil {
-		ap.Ctx.Redirect(302, "/addpet")
+	err1 := AddPetInfo(newpet, newpetimg, userid)
+	if err1 != nil {
+		ap.Ctx.Redirect(302, "/login")
 	}
 	ap.Ctx.Redirect(302, "/")
 }

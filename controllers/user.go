@@ -27,11 +27,11 @@ func (ac *AccountController) Get() {
 func (ac *AccountController) Post() {
 	action := ac.GetString("action")
 	if action == "login"{
-		uname := ac.GetString("uname")
+		account := ac.GetString("account")
 		pwd := ac.GetString("pwd")
 		// autoLogin := ac.GetString("autoLogin") == "on"
 
-		if "" == uname {
+		if "" == account {
 			ac.Data["json"] = map[string]interface{}{"code": 0, "message": "账号不能为空"}
 			ac.ServeJSON()
 		}
@@ -40,11 +40,11 @@ func (ac *AccountController) Post() {
 			ac.ServeJSON()
 		}
 
-		err, user := CheckLog(uname, pwd)
+		err, user := CheckLog(account, pwd)
 
 		if err == nil {
 			ac.SetSession("userLogin", "1")
-			ac.SetSession("uname",uname)
+			ac.SetSession("account",account)
 			ac.Data["json"] = map[string]interface{}{"code": 1, "message": "贺喜你，登录成功", "user": user}
 		} else {
 			ac.Data["json"] = map[string]interface{}{"code": 0, "message": "登录失败"}
@@ -52,10 +52,10 @@ func (ac *AccountController) Post() {
 		ac.ServeJSON()
 	}else if action == "regist"{
 		// message := ac.GetString("message")
-		uname := ac.GetString("uname")
+		account := ac.GetString("account")
 		pwd := ac.GetString("pwd")
 
-		err := Register(uname, pwd)
+		err := Register(account, pwd)
 
 		if err != nil {
 			beego.Error(err)
@@ -71,60 +71,6 @@ type LogoutController struct {
 
 func (lout *LogoutController) Get() {
 	lout.DelSession("userLogin")
-	lout.DelSession("uname")
+	lout.DelSession("account")
 	lout.Redirect("/", 302)
 }
-
-
-
-// func (ac *AccountController) Get() {
-// 	isExit := ac.Input().Get("exit") == "true"
-// 	if isExit {
-// 		ac.Ctx.SetCookie("uname", "", -1, "/")
-// 		ac.Ctx.SetCookie("pwd", "", -1, "/")
-// 		ac.Redirect("/", 302)
-// 		return
-// 	}
-// 	ac.TplName = "login.html"
-// }
-
-// func (ac *AccountController) Post() {
-// 	uname := ac.Input().Get("uname")
-// 	pwd := ac.Input().Get("pwd")
-// 	autoLogin := ac.Input().Get("autoLogin") == "on"
-// 	err := models.CheckLog(uname, pwd)
-// 	if err == nil {
-// 		maxAge := 0
-// 		if autoLogin {
-// 			maxAge = 1<<31 - 1
-// 		}
-// 		ac.Ctx.SetCookie("uname", uname, maxAge, "/")
-// 		ac.Ctx.SetCookie("pwd", pwd, maxAge, "/")
-
-// 	}
-// 	ac.Redirect("/", 302)
-// 	return
-
-// }
-
-// func checkAccount(ctx *context.Context) bool {
-// 	ck, err := ctx.Request.Cookie("uname")
-// 	if err != nil {
-// 		return false
-// 	}
-
-// 	uname := ck.Value
-
-// 	ck, err = ctx.Request.Cookie("pwd")
-// 	if err != nil {
-// 		return false
-// 	}
-// 	pwd := ck.Value
-
-// 	err = models.CheckLog(uname, pwd)
-// 	if err == nil {
-// 		return true
-// 	} else {
-// 		return false
-// 	}
-// }

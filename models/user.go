@@ -20,13 +20,13 @@ type User struct {
 type UserProfile struct {
 	Id       int
 	Realname string
-	Account  string
-	Sex      bool
+	Username string
+	Sex      bool `orm:"null"`
 	Phone    string
 	Email    string
 	Address  string
 	Hobby    string
-	Birth    time.Time	`orm:"auto_now_add;type(date)"`
+	Birth    time.Time `orm:"null;type(date)"`
 	Intro    string
 	Province string
 	City     string
@@ -43,7 +43,7 @@ func (u *User) TableName() string {
 	return "user"
 }
 
-func(up *UserProfile)TableName() string{
+func (up *UserProfile) TableName() string {
 	return "user_profile"
 }
 
@@ -70,23 +70,18 @@ func Register(Account string, Password string) error {
 		userpro.Email = Account
 	}
 
-	_, err1 := o.Insert(userpro)
-	if err1 != nil{
-		return err1
-	}
-
 	user.Created = time.Now()
 	user.Changed = time.Now()
 	user.UserProfile = userpro
 
-	_, err2 := o.Insert(userpro)
-	if err2 != nil{
-		return err2
+	_, err1 := o.Insert(userpro)
+	if err1 != nil {
+		return err1
 	}
 
-	_, err3 := o.Insert(user)
-	if err != nil {
-		return err3
+	_, err2 := o.Insert(user)
+	if err2 != nil {
+		return err2
 	}
 	return nil
 }
@@ -98,6 +93,7 @@ func UpdatePro(id int, updPro UserProfile) error {
 	pro.CoverUrl = updPro.CoverUrl
 	pro.Address = updPro.Address
 	pro.Realname = updPro.Realname
+	pro.Username = updPro.Username
 	pro.Birth = updPro.Birth
 	pro.Hobby = updPro.Hobby
 	pro.Sex = updPro.Sex
@@ -118,5 +114,13 @@ func CheckLog(Account string, Password string) (err error, user *User) {
 	qs := o.QueryTable(user)
 	err = qs.Filter("Account", Account).Filter("Password", pwdmd5).One(user)
 
+	return err, user
+}
+
+func GetUserByAccount(account string)(err error, user *User){
+	o := orm.NewOrm()
+	user = new(User)
+	qs := o.QueryTable(user)
+	err = qs.Filter("Account",account).One(user)
 	return err, user
 }
