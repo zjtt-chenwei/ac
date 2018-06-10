@@ -217,9 +217,7 @@
             
     </div>
     <textarea  id="introduce" name="intro" placeholder="宠物简介（可为空）" value=""></textarea></br>
-    <!-- <input type="button" value="获取日期" onclick="showDate();" /> -->
-
-
+   
     <span class="btn btn-success fileinput-button"> 
         <span>选择照片</span>
         <input  class="photo" id="photo" name="imgFile" type="file" accept="image/*" multiple="multiple" value="">
@@ -231,9 +229,10 @@
 
 <script>
 
-    /* function showDate(){
+    /* $('#birthday').change(function(){
         console.log($('#birthday').val());
-    } */
+        console.log(typeof $('#birthday').val());//判断input type=data的value的类型
+    }); */
     var result = document.getElementById("img1");
     if(typeof FileReader == 'undefined') {
         result.innerHTML = "抱歉，你的浏览器不支持FileReader";
