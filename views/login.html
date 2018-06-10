@@ -83,7 +83,7 @@
 			-o-background-size: cover;
 		}
 
-		.main {
+		.main1 {
 			margin: 140px auto 30px auto;
 			height: 500px;
 			width: 430px;
@@ -91,7 +91,15 @@
 			background-color: #ffffff63;
 			position: relative;
 		}
-
+		.main2 {
+			margin: 140px auto 30px auto;
+			height: 550px;
+			width: 430px;
+			border: 1px solid white;
+			background-color: #ffffff63;
+			position: relative;
+		}
+		
 		.SignHeader {
 			margin: 30px auto 0 auto;
 			color: #FFB90F;
@@ -251,7 +259,7 @@
 
 <body>
 	<div class="content1">
-		<div class="main" id="mian">
+		<div class="main1" id="mian1">
 
 
 			<div class="SignHeader" style="padding-bottom:5px;">
@@ -269,7 +277,7 @@
 			<div class="SignContainer">
 				<div class="Login-content">
 					<form action="" method="POST">
-						<div class="form-group">
+						<div class="form-group" style="display: none">
 							<input name="action" id="action" type="radio" checked="checked" value="login">登录
 						</div>
 						<div class="input-group">
@@ -300,7 +308,7 @@
 
 
 	<div class="content2">
-		<div class="main" id="mian">
+		<div class="main2" id="mian2">
 
 			<div class="SignHeader" style="padding-bottom:5px;">
 				<img src="../static/images/ac.png" style="height:82.5px;width:176px;">
@@ -311,7 +319,7 @@
 			<div class="SignContainer">
 				<div class="Register-content">
 					<form method="POST" action="">
-						<div class="form-group">
+						<div class="form-group" style="display: none">
 							<input name="action" id="action" type="radio"  checked="checked" value="regist" >注册
 						</div>
 						<div class="input-group">
@@ -327,10 +335,15 @@
 									<a href="#">获取短信验证码</a>
 								</div>
 							</div> -->
-							<div class="input-group">
+						<div class="input-group">
+							<input name="pwd" id="pwd" type="password" class="form-control" placeholder="请输入密码" value>
+						</div>
+						<br>
+						
+						<div class="input-group">
 							<input name="message" id="message" type="text" class="form-control" placeholder="短信验证码" value>
 						</div>
-
+						
 						<div class="Register-options">
 							<div class="Register-getmess">
 								<a href="#">获取短信验证码</a>
