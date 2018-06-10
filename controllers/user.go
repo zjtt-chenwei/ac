@@ -1,48 +1,68 @@
 package controllers
 
 import (
-	"actest/models"
+	."actest/models"
 
 	"github.com/astaxie/beego"
 )
 
-type LoginController struct {
+
+type RegisterController struct {
 	BaseController
 }
 
-func (lin *LoginController) Get() {
-	Login := lin.isLogin
+type AccountController struct {
+	BaseController
+}
+
+func (ac *AccountController) Get() {
+	Login := ac.isLogin
 	if Login {
-		lin.Redirect("/", 302)
+		ac.Redirect("/", 302)
 	} else {
-		lin.TplName = "login.html"
+		ac.TplName = "login.html"
 	}
 }
 
-func (lin *LoginController) Post() {
-	uname := lin.GetString("uname")
-	pwd := lin.GetString("pwd")
-	// autoLogin := lin.GetString("autoLogin") == "on"
+func (ac *AccountController) Post() {
+	action := ac.GetString("action")
+	if action == "login"{
+		uname := ac.GetString("uname")
+		pwd := ac.GetString("pwd")
+		// autoLogin := ac.GetString("autoLogin") == "on"
 
-	if "" == uname {
-		lin.Data["json"] = map[string]interface{}{"code": 0, "message": "账号不能为空"}
-		lin.ServeJSON()
-	}
-	if "" == pwd {
-		lin.Data["json"] = map[string]interface{}{"code": 0, "message": "请填写密码"}
-		lin.ServeJSON()
-	}
+		if "" == uname {
+			ac.Data["json"] = map[string]interface{}{"code": 0, "message": "账号不能为空"}
+			ac.ServeJSON()
+		}
+		if "" == pwd {
+			ac.Data["json"] = map[string]interface{}{"code": 0, "message": "请填写密码"}
+			ac.ServeJSON()
+		}
 
-	err, user := models.CheckLog(uname, pwd)
+		err, user := CheckLog(uname, pwd)
 
-	if err == nil {
-		lin.SetSession("userLogin", "1")
-		lin.SetSession("uname",uname)
-		lin.Data["json"] = map[string]interface{}{"code": 1, "message": "贺喜你，登录成功", "user": user}
-	} else {
-		lin.Data["json"] = map[string]interface{}{"code": 0, "message": "登录失败"}
+		if err == nil {
+			ac.SetSession("userLogin", "1")
+			ac.SetSession("uname",uname)
+			ac.Data["json"] = map[string]interface{}{"code": 1, "message": "贺喜你，登录成功", "user": user}
+		} else {
+			ac.Data["json"] = map[string]interface{}{"code": 0, "message": "登录失败"}
+		}
+		ac.ServeJSON()
+	}else if action == "regist"{
+		// message := ac.GetString("message")
+		uname := ac.GetString("uname")
+		pwd := ac.GetString("pwd")
+
+		err := Register(uname, pwd)
+
+		if err != nil {
+			beego.Error(err)
+		}
+
+		ac.Redirect("/", 302)
 	}
-	lin.ServeJSON()
 }
 
 type LogoutController struct {
@@ -55,54 +75,34 @@ func (lout *LogoutController) Get() {
 	lout.Redirect("/", 302)
 }
 
-type RegisterController struct {
-	BaseController
-}
-
-func (r *RegisterController) Get() {
-	r.TplName = "register.html"
-}
-
-func (r *RegisterController) Post() {
-	uname := r.Input().Get("uname")
-	pwd := r.Input().Get("pwd")
-
-	err := models.Register(uname, pwd)
-
-	if err != nil {
-		beego.Error(err)
-	}
-
-	r.Redirect("/", 302)
-}
 
 
-// func (lin *LoginController) Get() {
-// 	isExit := lin.Input().Get("exit") == "true"
+// func (ac *AccountController) Get() {
+// 	isExit := ac.Input().Get("exit") == "true"
 // 	if isExit {
-// 		lin.Ctx.SetCookie("uname", "", -1, "/")
-// 		lin.Ctx.SetCookie("pwd", "", -1, "/")
-// 		lin.Redirect("/", 302)
+// 		ac.Ctx.SetCookie("uname", "", -1, "/")
+// 		ac.Ctx.SetCookie("pwd", "", -1, "/")
+// 		ac.Redirect("/", 302)
 // 		return
 // 	}
-// 	lin.TplName = "login.html"
+// 	ac.TplName = "login.html"
 // }
 
-// func (lin *LoginController) Post() {
-// 	uname := lin.Input().Get("uname")
-// 	pwd := lin.Input().Get("pwd")
-// 	autoLogin := lin.Input().Get("autoLogin") == "on"
+// func (ac *AccountController) Post() {
+// 	uname := ac.Input().Get("uname")
+// 	pwd := ac.Input().Get("pwd")
+// 	autoLogin := ac.Input().Get("autoLogin") == "on"
 // 	err := models.CheckLog(uname, pwd)
 // 	if err == nil {
 // 		maxAge := 0
 // 		if autoLogin {
 // 			maxAge = 1<<31 - 1
 // 		}
-// 		lin.Ctx.SetCookie("uname", uname, maxAge, "/")
-// 		lin.Ctx.SetCookie("pwd", pwd, maxAge, "/")
+// 		ac.Ctx.SetCookie("uname", uname, maxAge, "/")
+// 		ac.Ctx.SetCookie("pwd", pwd, maxAge, "/")
 
 // 	}
-// 	lin.Redirect("/", 302)
+// 	ac.Redirect("/", 302)
 // 	return
 
 // }

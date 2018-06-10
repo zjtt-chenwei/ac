@@ -42,7 +42,7 @@ func (ap *AddPetController) Post() {
 		ap.Redirect("/login",302)
 		return 
 	}
-	uname := ap.GetSession("uname")
+	// uname := ap.GetSession("uname")
 
 	speci := ap.GetString("speci")
 	variety := ap.GetString("variety")
