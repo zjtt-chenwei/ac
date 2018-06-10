@@ -93,7 +93,7 @@ func (ap *AddPetController) Post() {
 
 	err1 := AddPetInfo(newpet, newpetimg, userid)
 	if err1 != nil {
-		ap.Ctx.Redirect(302, "/login")
+		// ap.Ctx.Redirect(302, "/login")
 	}
 	ap.Ctx.Redirect(302, "/")
 }
