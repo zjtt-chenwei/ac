@@ -56,14 +56,12 @@
                 }
               //  console.log($('#vari-select').selectpicker('val'));              
           });
-        }           
+        }         
     });
 
-    function check(form) {
-        var name=document.getElementById("name");
-        //var sex=document.getElementById("sex").val();
+    function checkform() {
+        var name=document.getElementById("name");      
         var bry=document.getElementById("birthday").value;
-        //var YN=document.getElementById("yes-no").val();
         var ide=document.getElementById("introduce").value;
         var photo=$("#photo").value;
         if(name.value.length == 0){
@@ -186,7 +184,7 @@
         <option >请选择</option>
     </select> -->
 
-<form role="form" enctype="multipart/form-data" method="post" onsubmit="return check(this)" action="">
+<form role="form" enctype="multipart/form-data" method="post">
     <legend style="font-size: 40px;">上传宠物信息</legend>
     种类：<select class="selectpicker"  id="speci-select" name = "speci">
         <option>请选择</option>
@@ -208,7 +206,7 @@
 </br>
     <div class="form-group">
         <label class="col-sm-3 control-label">出生日期 : </label> 
-        <input id="birthday" class="form-control" type="date" placeholder="请输入出生日期" value="" name="birth">
+        <input id="birthday" name="birth" class="form-control" type="date" placeholder="请输入出生日期" value="">
     </div>
 </br>
     <div class="form-group">
@@ -217,7 +215,7 @@
         <input id="no" type="radio"  name="partner" style="width: 16px;height: 16px;" value="0"/>无
             
     </div>
-    <textarea  id="introduce" placeholder="宠物简介（可为空）" value=""></textarea></br>
+    <textarea  id="introduce" name="intro" placeholder="宠物简介（可为空）" value=""></textarea></br>
     <!-- <input type="button" value="获取日期" onclick="showDate();" /> -->
 
 
@@ -227,7 +225,7 @@
     </span><br> 
     <div id="img1" style="display: none;margin-top: 20px;"></div>
     
-    <button type="submit" class="btn btn-default btn-lg active">提交</button>
+    <button type="submit" class="btn btn-default btn-lg active" onclick="return checkform()">提交</button>
 </form>
 
 <script>
@@ -235,11 +233,11 @@
     /* function showDate(){
         console.log($('#birthday').val());
     } */
-   var result = document.getElementById("img1");
+    var result = document.getElementById("img1");
     if(typeof FileReader == 'undefined') {
         result.innerHTML = "抱歉，你的浏览器不支持FileReader";
     }
-     // 将文件以Data URL形式进行读入页面
+    // 将文件以Data URL形式进行读入页面
     $("#photo").change(function(){
         result.style.display='block';
         // 检查是否为图像类型
@@ -255,11 +253,10 @@
     })
     
     
-    
-
 </script>
 </body>
 </html>
+
 
 
    
