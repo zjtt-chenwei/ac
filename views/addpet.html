@@ -62,7 +62,6 @@
     function checkform() {
         var name=document.getElementById("name");      
         var bry=document.getElementById("birthday").value;
-        var ide=document.getElementById("introduce").value;
         var photo=$("#photo").value;
         if(name.value.length == 0){
             alert("请输入宠物名");
@@ -126,6 +125,8 @@
             width: 500px;
             height: 100px;
             text-align: left;
+            overflow-y: auto;  /* 让滚动条自适应，保证兼容性 */
+            resize:none; /* 禁止拉动 */
         }
         .fileinput-button {
             margin-top: 20px;
