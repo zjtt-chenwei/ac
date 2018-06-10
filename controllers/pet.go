@@ -13,10 +13,10 @@ type AddPetController struct {
 }
 
 func (ap *AddPetController) Get() {
-	// if !ap.isLogin{
-	// 	ap.Redirect("/login",302)
-	// 	return 
-	// }
+	if !ap.isLogin{
+		ap.Redirect("/login",302)
+		return 
+	}
 	var vmaps map[string]interface{}
 	vmaps = make(map[string]interface{})
 
@@ -38,11 +38,11 @@ func (ap *AddPetController) Get() {
 }
 
 func (ap *AddPetController) Post() {
-	// if !ap.isLogin{
-	// 	ap.Redirect("/login",302)
-	// 	return 
-	// }
-	// uname := ap.GetSession("uname")
+	if !ap.isLogin{
+		ap.Redirect("/login",302)
+		return 
+	}
+	uname := ap.GetSession("uname")
 
 	speci := ap.GetString("speci")
 	variety := ap.GetString("variety")
@@ -80,9 +80,9 @@ func (ap *AddPetController) Post() {
 	newpet.Birth = birth
 	newpet.Name = name
 
-	err1, err2:= AddPetInfo(newpet, newpetimg)
+	err1 ,err2:= AddPetInfo(newpet, newpetimg)
 	if err1 != nil && err2!=nil {
-		ap.Ctx.Redirect(302, "/login")
+		ap.Ctx.Redirect(302, "/addpet")
 	}
 	ap.Ctx.Redirect(302, "/")
 }

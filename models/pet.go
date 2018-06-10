@@ -17,7 +17,7 @@ type Pet struct {
 	Partner     bool
 	Created     time.Time    `orm:"auto_now_add;type(datetime)"`
 	Changed     time.Time    `orm:"auto_now_add;type(datetime)"`
-	// UserProfile *UserProfile `orm:"rel(fk)"`
+	UserProfile *UserProfile `orm:"rel(fk)"`
 	PetImg      []*PetImg    `orm:"null;reverse(many);on_delete(set_null)"`
 }
 

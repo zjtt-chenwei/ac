@@ -196,16 +196,16 @@
 
 <form role="form" enctype="multipart/form-data" method="post">
     <legend style="font-size: 40px;">上传宠物信息</legend>
-    种类：<select class="selectpicker"  id="speci-select">
+    种类：<select class="selectpicker"  id="speci-select" name = "speci">
         <option>请选择</option>
     </select>
-    品种：<select class="selectpicker" id="vari-select">
+    品种：<select class="selectpicker" id="vari-select" name = "variety">
         <option >请选择</option>
     </select>
 
     <div class="form-group" style="margin-top: 40px;">
         <label class="col-sm-3 control-label">宠物名 : </label> 
-        <input id="name" class="form-control" type="text" placeholder="请输入宠物名" value="">
+        <input id="name" class="form-control" name = "name" type="text" placeholder="请输入宠物名" value="">
     </div>
 </br>
     <div class="form-group" >
@@ -216,7 +216,7 @@
 </br>
     <div class="form-group">
         <label class="col-sm-3 control-label">出生日期 : </label> 
-        <input id="birthday" class="form-control" type="date" placeholder="请输入出生日期" value="">
+        <input id="birthday" class="form-control" type="date" placeholder="请输入出生日期" value="" name="birth">
     </div>
 </br>
     <div class="form-group">

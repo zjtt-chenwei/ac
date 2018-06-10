@@ -12,7 +12,7 @@ type User struct {
 	Id          int `orm:"auto"`
 	Account     string
 	Password    string
-	UserProfile *UserProfile `orm:"rel(one)"`
+	UserProfile *UserProfile `orm:"null;rel(one);on_delete(set_null)"`
 	Created     time.Time    `orm:"auto_now_add;type(datetime)"`
 	Changed     time.Time    `orm:"auto_now_add;type(datetime)"`
 }
@@ -31,7 +31,7 @@ type UserProfile struct {
 	Province string
 	City     string
 	CoverUrl string
-	// Pet      []*Pet `orm:"reverse(many)"`
+	Pet      []*Pet `orm:"null;reverse(many)"`
 	User     *User  `orm:"reverse(one)"`
 }
 
@@ -43,6 +43,10 @@ func (u *User) TableName() string {
 	return "user"
 }
 
+func(up *UserProfile)TableName() string{
+	return "user_profile"
+}
+
 func Register(Account string, Password string) error {
 	o := orm.NewOrm()
 	vaild := validation.Validation{}
@@ -50,23 +54,39 @@ func Register(Account string, Password string) error {
 	pwdmd5 := com.Md5(Password)
 
 	user := &User{Account: Account, Password: pwdmd5}
+	userpro := new(UserProfile)
 
+	// 查询是否有重复的账号
 	qs := o.QueryTable("user")
 	err := qs.Filter("Account", Account).One(user)
 	if err == nil {
 		return err
 	}
+
+	userpro.User = user
+	if v := vaild.Email(Account, "Email"); !v.Ok {
+		userpro.Phone = Account
+	} else {
+		userpro.Email = Account
+	}
+
+	_, err1 := o.Insert(userpro)
+	if err1 != nil{
+		return err1
+	}
+
 	user.Created = time.Now()
 	user.Changed = time.Now()
-	user.UserProfile.Id = user.Id
-	if v := vaild.Email(Account, "Email"); !v.Ok {
-		user.UserProfile.Phone = Account
-	} else {
-		user.UserProfile.Email = Account
+	user.UserProfile = userpro
+
+	_, err2 := o.Insert(userpro)
+	if err2 != nil{
+		return err2
 	}
-	_, err = o.Insert(user)
+
+	_, err3 := o.Insert(user)
 	if err != nil {
-		return err
+		return err3
 	}
 	return nil
 }
