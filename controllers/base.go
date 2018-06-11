@@ -23,4 +23,3 @@ func (b *BaseController) Go404() {
 	b.TplName = "404.html"
 	return
 }
-

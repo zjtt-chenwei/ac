@@ -60,6 +60,7 @@ func (ap *AddPetController) Post() {
 	sexstr := ap.GetString("sex")
 	name := ap.GetString("name")
 	intro := ap.GetString("intro")
+	// birthString := ap.Input().Get("birth")
 	birthString := ap.GetString("birth")
 	partnerstr := ap.GetString("partner")
 
@@ -76,7 +77,11 @@ func (ap *AddPetController) Post() {
 	ap.SaveToFile("imgFile", fileURL)
 	ap.Data["jsonErr2"] = map[string]interface{}{"error": 0, "url": strings.Replace(dir, ".", "", 1) + "/" + filename}
 
-	birth, _ := time.Parse(birthString, "2000-01-01")
+	birth, err1 := time.Parse(birthString, "2000-01-01")
+
+	if err1 != nil{
+		beego.Error(err1)
+	}
 
 	var newpetimg PetImg
 	var newpet Pet
@@ -91,9 +96,10 @@ func (ap *AddPetController) Post() {
 	newpet.Birth = birth
 	newpet.Name = name
 
-	err1 := AddPetInfo(newpet, newpetimg, userid)
-	if err1 != nil {
+	err2 := AddPetInfo(newpet, newpetimg, userid)
+	if err2 != nil {
 		// ap.Ctx.Redirect(302, "/login")
 	}
+
 	ap.Ctx.Redirect(302, "/")
 }

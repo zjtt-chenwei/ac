@@ -29,7 +29,7 @@
         <button type="submit" class="btn btn-default">提交</button>
       </form> -->
       <ul class="nav navbar-nav navbar-right">
-        {{if .isLogin}}
+        {{if $.isLogin}}
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu">

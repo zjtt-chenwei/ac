@@ -1,4 +1,4 @@
-{{template "head"}}
+{{template "head" .}}
 
 <title>宠物社区首页</title>
 
@@ -9,12 +9,12 @@
 </head>
 
 <body>
-    {{template "nav"}}
+    {{template "nav" .}}
     <div>
         <img src="../static/images/index.png" style="margin-left:550px;">
         <img src="../static/images/timg.jpg" style="margin-left:100px;">
         <a href="/pet" class="wang1" style="text-decoration:none;font-size:30px;color:#E0D440;margin-top:20px;display:inline-block;">宠物婚介</a>
-        {{template "bottom"}}
+        {{template "bottom" .}}
 
     </div>
 </body>

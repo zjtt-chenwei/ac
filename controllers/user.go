@@ -7,10 +7,6 @@ import (
 )
 
 
-type RegisterController struct {
-	BaseController
-}
-
 type AccountController struct {
 	BaseController
 }
