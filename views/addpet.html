@@ -12,7 +12,7 @@
     <script src="static/bootstrap/js/bootstrap-select.min.js"></script>
 
     <title>上传</title>
-    <script type="text/javascript">
+    <script type="text/javascript"> 
     $(document).ready(function(){
         function init(obj){
             return $(obj).html('<option >请选择</option>')//清空下拉表并赋值“请选择”   //$("#loc_ajax_town option").remove()
@@ -27,9 +27,9 @@
         });
 
         window.onload=function(){
-            var json='{"speci":[{"Id":1,"Name":"猫"},{"Id":2,"Name":"狗"},{"Id":3,"Name":"兔"},{"Id":4,"Name":"鸟"},{"Id":5,"Name":"小型"},{"Id":6,"Name":"水生"},{"Id":7,"Name":"两栖"}],"vari":[{"Id":1,"Name":"暹罗猫","PetSpeci":1},{"Id":2,"Name":"布偶猫","PetSpeci":1},{"Id":3,"Name":"苏格兰折耳猫","PetSpeci":1},{"Id":4,"Name":"波斯猫","PetSpeci":1},{"Id":5,"Name":"英国短毛猫","PetSpeci":1},{"Id":6,"Name":"缅因猫","PetSpeci":1},{"Id":7,"Name":"美国短尾猫","PetSpeci":1},{"Id":8,"Name":"埃及猫","PetSpeci":1},{"Id":9,"Name":"橘猫","PetSpeci":1},{"Id":10,"Name":"哈士奇","PetSpeci":2},{"Id":11,"Name":"贵宾犬","PetSpeci":2},{"Id":12,"Name":"松狮","PetSpeci":2},{"Id":13,"Name":"博美","PetSpeci":2},{"Id":14,"Name":"萨摩耶","PetSpeci":2},{"Id":15,"Name":"柯基犬","PetSpeci":2},{"Id":16,"Name":"秋田犬","PetSpeci":2},{"Id":17,"Name":"泰迪犬","PetSpeci":2},{"Id":18,"Name":"金毛","PetSpeci":2},{"Id":19,"Name":"荷兰兔","PetSpeci":3},{"Id":20,"Name":"安哥拉兔","PetSpeci":3},{"Id":21,"Name":"海棠兔","PetSpeci":3},{"Id":22,"Name":"暹罗兔","PetSpeci":3},{"Id":23,"Name":"云雀","PetSpeci":4},{"Id":24,"Name":"金丝雀","PetSpeci":4},{"Id":25,"Name":"黄鹂","PetSpeci":4},{"Id":26,"Name":"鹦鹉","PetSpeci":4},{"Id":27,"Name":"仓鼠","PetSpeci":5},{"Id":28,"Name":"龙猫","PetSpeci":5},{"Id":29,"Name":"荷兰猪","PetSpeci":5},{"Id":30,"Name":"观赏鱼","PetSpeci":6},{"Id":31,"Name":"金鱼","PetSpeci":6},{"Id":32,"Name":"龙虾","PetSpeci":6},{"Id":33,"Name":"乌龟","PetSpeci":7},{"Id":34,"Name":"蜥蜴","PetSpeci":7},{"Id":35,"Name":"蛇","PetSpeci":7},{"Id":36,"Name":"蛙","PetSpeci":7}]}'
+            var json='{{.json}}'    
             var data=JSON.parse(json);
-            //console.log(data.speci[1].Name);          
+            console.log(data.speci[1].Name);          
             //init($('#speci-select'));
           
             for(var i=0;i<data.speci.length;i++){
@@ -217,9 +217,7 @@
             
     </div>
     <textarea  id="introduce" name="intro" placeholder="宠物简介（可为空）" value=""></textarea></br>
-    <!-- <input type="button" value="获取日期" onclick="showDate();" /> -->
-
-
+   
     <span class="btn btn-success fileinput-button"> 
         <span>选择照片</span>
         <input  class="photo" id="photo" name="imgFile" type="file" accept="image/*" multiple="multiple" value="">
@@ -231,9 +229,10 @@
 
 <script>
 
-    /* function showDate(){
+    /* $('#birthday').change(function(){
         console.log($('#birthday').val());
-    } */
+        console.log(typeof $('#birthday').val());//判断input type=data的value的类型
+    }); */
     var result = document.getElementById("img1");
     if(typeof FileReader == 'undefined') {
         result.innerHTML = "抱歉，你的浏览器不支持FileReader";
