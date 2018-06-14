@@ -8,8 +8,9 @@
 
     <!-- Style Css -->
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css" >
-    <script type="text/jQuery" src="../static/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="/static/js/jquery-1.11.3.min.js"></script>
+    <script type="text/jQuery" src="../static/bootstrap/js/bootstrap.js"></script>
+    
     
     <script type="text/javascript">
     
