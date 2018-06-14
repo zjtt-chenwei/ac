@@ -14,7 +14,7 @@
     </div>
    <!-- onmouseover="this.style.color='#f1ad48'" onmouseout="this.style.color='#000000'"  style="color:#000000;" -->
     <!-- Collect the nav links, forms, and other content for toggling -->  
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="/" class="active">首页 <span class="sr-only">(current)</span></a></li>
         <li><a href="/petmatch" >宠物婚介</a></li>
@@ -31,7 +31,10 @@
       <ul class="nav navbar-nav navbar-right">
         {{if $.isLogin}}
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+          <span class="caret"></span>
+          </a>
           <ul class="dropdown-menu">
             <li><a href="/people">个人中心</a></li>
             <li><a href="/settings">设置</a></li>
