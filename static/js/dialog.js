@@ -30,12 +30,12 @@ $(function () {
     $('#login-form').validate({
         ignore: '',
         rules: {
-            phone: { required: true, number: true, rangelength: [11, 11] },
-            password: { required: true }
+            account: { required: true, number: true, rangelength: [11, 11] },
+            pwd: { required: true }
         },
         messages: {
-            phone: { required: '请填写手机号', number: '请填写正确的手机号', rangelength: '请填写11位手机号' },
-            password: { required: '请填写密码' }
+            account: { required: '请填写手机号', number: '请填写正确的手机号', rangelength: '请填写11位手机号' },
+            pwd: { required: '请填写密码' }
         },
         submitHandler: function (form) {
             var url = '/login';
