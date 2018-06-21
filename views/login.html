@@ -7,8 +7,8 @@
 	<link rel="shortcut icon" type="image/x-icon" href="image/favicon.ico">
 	<link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 	<script  type="text/jquery" src="../static/bootstrap/js/bootstrap.min.js"></script>
-
 	<script type="text/javascript" src="../static/js/jquery-1.11.3.min.js" /></script>
+	<script type="text/javascript" src="../static/js/form.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
 			/* var div1=document.getElementsByClassName("content1");
@@ -258,7 +258,7 @@
 
 <body>
 	<div class="content1">
-		<div class="main" id="mian">
+		<div class="main" id="main">
 
 
 			<div class="SignHeader" style="padding-bottom:5px;">
@@ -275,7 +275,7 @@
 			</div>
 			<div class="SignContainer">
 				<div class="Login-content">
-					<form action="" method="POST">
+					<form action="" method="POST" id = "login-form">
 						<div class="form-group" style="display: none">
 							<input name="action" type="radio" checked="checked" value="login">登录
 						</div>
@@ -307,7 +307,7 @@
 
 
 	<div class="content2">
-		<div class="main" id="mian">
+		<div class="main" id="main">
 
 			<div class="SignHeader" style="padding-bottom:5px;">
 				<img src="../static/images/ac.png" style="height:82.5px;width:176px;">
