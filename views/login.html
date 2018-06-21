@@ -8,35 +8,9 @@
 	<link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 	<script  type="text/jquery" src="../static/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="../static/js/jquery-1.11.3.min.js" /></script>
-	<script type="text/javascript" src="../static/js/form.js"></script>
+	<script type="text/javascript" src="../static/js/dialog.js"/></script>
 	<script type="text/javascript">
-		$(document).ready(function () {
-			/* var div1=document.getElementsByClassName("content1");
-			var div2=document.getElementsByClassName("content2");
-			var zhuce=document.getElementById("zhuce");
-			var denglu=document.getElementById("denglu");
-			div1.style.display='block';
-			div2.style.display='none';
-			zhuce.onclick=function(){
-				div1.style.display='none';
-				div2.style.display='block';
-			};
-			denglu.onclick=function(){
-				div1.style.display='block';
-				div2.style.display='none';
-			} */
-			$(".content2").hide();
-			var zhuce = document.getElementById("zhuce");
-			var denglu = document.getElementById("denglu");
-			zhuce.onclick = function () {
-				$(".content1").hide();
-				$(".content2").show();
-			};
-			denglu.onclick = function () {
-				$(".content1").show();
-				$(".content2").hide();
-			}
-		});
+		
 
 		function checklogin() {
 			var uname = document.getElementById("username");
@@ -258,7 +232,7 @@
 
 <body>
 	<div class="content1">
-		<div class="main" id="main">
+		<div class="main" id="mian">
 
 
 			<div class="SignHeader" style="padding-bottom:5px;">
@@ -307,7 +281,7 @@
 
 
 	<div class="content2">
-		<div class="main" id="main">
+		<div class="main" id="mian">
 
 			<div class="SignHeader" style="padding-bottom:5px;">
 				<img src="../static/images/ac.png" style="height:82.5px;width:176px;">

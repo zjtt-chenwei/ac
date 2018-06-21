@@ -45,9 +45,7 @@ func (ac *AccountController) Post() {
 		} else {
 			ac.Data["json"] = map[string]interface{}{"code": 0, "message": "登录失败"}
 		}
-		// ac.ServeJSON()
-		ac.Redirect("/", 302)
-		return
+		ac.ServeJSON()
 	}else if action == "regist"{
 		// message := ac.GetString("message")
 		account := ac.GetString("account")
