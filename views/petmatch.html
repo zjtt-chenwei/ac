@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{{template "head" .}}
     <title>宠物婚介</title>
 
-    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/listitem.css"> 
-    <script src="/static/js/jquery-1.11.3.min.js"></script>    
-    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/listitem.css">   
+
 
     <style type="text/css">
         body{
@@ -46,7 +39,7 @@
     </style>
 </head>
     <body>
-
+        {{template "nav" .}}
         <div class="jswbox">
             <div class="spacer-50">
                 <img src="static/images/zhua.png">

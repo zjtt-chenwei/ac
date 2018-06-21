@@ -77,7 +77,8 @@ func (ap *AddPetController) Post() {
 	ap.SaveToFile("imgFile", fileURL)
 	ap.Data["jsonErr2"] = map[string]interface{}{"error": 0, "url": strings.Replace(dir, ".", "", 1) + "/" + filename}
 
-	birth, err1 := time.Parse(birthString, "2000-01-01")
+	birthString += " 00:00:00"
+	birth, err1 := time.Parse("2006-01-02 15:04:05", birthString)
 
 	if err1 != nil{
 		beego.Error(err1)
