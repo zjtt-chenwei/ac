@@ -16,7 +16,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->  
     <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="/" class="active">首页 <span class="sr-only">(current)</span></a></li>
+        <li><a href="/">首页 <span class="sr-only">(current)</span></a></li>
         <li><a href="/petmatch" >宠物婚介</a></li>
         <li><a href="../static/baike" >宠物百科</a></li>
         <li><a href="../static/shop" >宠物用品</a></li>
